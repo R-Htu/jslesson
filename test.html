@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+  <title>Callback Function Demo</title>
+</head>
+<body>
+  <h2>Callback Function Example</h2>
+  <button onclick="startGreeting()">Click to Greet</button>
+
+  <script>
+    function greetUser(name, callback) {
+      alert("Hello " + name + "!");
+      callback(); // This is the callback
+    }
+
+    function sayGoodbye() {
+      alert("Goodbye!");
+    }
+
+    function startGreeting() {
+      greetUser("Anthony", sayGoodbye); // Passing sayGoodbye as a callback
+    }
+const name = "Anthony";
+ const myPromise = new Promise((resolve,reject)=>{
+    resolve('HEllo ' + name + '!');
+    reject('error');
+
+ });
+ myPromise.then(
+    (val)=>console.log(val),
+    (err)=>console.log(err)
+ )
+ async function myfun(){
+    return await new Promise((resolve)=>{
+        setTimeout(()=>{
+            resolve('§her jfdkfjd');
+        },1000);
+    })
+ }
+ myfun().then((val)=>console.log(val));
+    </script>
+</body>
+</html>

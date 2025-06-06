@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+
+        //🌟 1. Generate a random decimal between 0 and 1
+        const randomNumber = Math.random();
+        console.log(randomNumber); // Example: 0.735832917
+        console.log(randomNumber*10);
+        console.log(Math.floor(randomNumber*10));
+
+        //🎲 2. Random whole number between 0 and 9
+        const randomInt = Math.floor(Math.random() * 10);
+        console.log(randomInt); // Example: 7
+
+        //🎯 3. Random number between 1 and 100
+        const randomNum = Math.floor(Math.random() * 100) + 1;
+        console.log(randomNum); // Example: 42
+
+        //🍭 4. Pick a random item from an array
+        const fruits = ["🍎", "🎯", "🍇", "🍉", "🍍"];
+        const ran = Math.random() * fruits.length;
+        console.log(ran);
+        console.log(Math.floor(ran))
+        const randomFruit = fruits[Math.floor(ran)];
+        console.log(randomFruit); // Example: 🍇
+        console.log(Math.floor(5.34))
+
+        //🧠 5. Random yes or no
+        const answer = Math.random() > 0.5 ? "Yes" : "No";
+        console.log(answer); // Example: Yes
+
+        //🧒 Bonus Game: Random student picker
+        const students = ["Alice", "Brady", "Anthony", "Mina"];
+        const chosenOne = students[Math.floor(Math.random() * students.length)];
+        console.log(`💡 Today’s lucky student is: ${chosenOne}`);
+
+    </script>
+</body>
+</html>

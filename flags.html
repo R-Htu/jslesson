@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Flag Logic Playground</title>
+  <style>
+    body {
+      font-family: "Segoe UI", sans-serif;
+      background: #f4f7f9;
+      margin: 0;
+      padding: 2rem;
+      color: #333;
+    }
+
+    h2 {
+      background: #5a5f5b;
+      padding: 10px;
+      border-right: 6px solid #91a48c;
+      border-left: 6px solid #35f904;
+      border-radius: 4px;
+      margin-top: 2rem;
+      color: #659835;
+    }
+
+    button {
+      padding: 10px 20px;
+      background-color: #688860;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-size: 1rem;
+      cursor: pointer;
+      margin-top: 10px;
+      transition: background 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #9faebe;
+    }
+
+    p, #name {
+      font-size: 1.2rem;
+      margin-top: 10px;
+      font-weight: 500;
+    }
+
+    #box {
+      width: 100px;
+      height: 100px;
+      border-radius: 10px;
+      margin-top: 10px;
+      transition: background 0.5s ease;
+    }
+
+    #count {
+      font-size: 2rem;
+      font-weight: bold;
+      margin: 1rem 0;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>✅ 1. Toggle Light On/Off (Boolean Flag)</h2>
+  <button onclick="toggleLight()">Toggle Light</button>
+  <p id="light">💡 Light is OFF</p>
+
+  <h2>✅ 2. Switch Between Two Names</h2>
+  <button onclick="switchName()">Switch Name</button>
+  <p id="name">Alice</p>
+
+  <h2>✅ 3. Cycle Through Three Colors</h2>
+  <button onclick="changeColor()">Change Color</button>
+  <div id="box" style="background: red;"></div>
+
+  <h2>✅ 4. Number Goes Up and Down (Direction Flag)</h2>
+  <p id="count">0</p>
+  <button onclick="changeDirection()">Change Direction</button>
+
+  <script>
+    let isOn = false;
+    function toggleLight() {
+      isOn = !isOn;
+      //document.getElementById("light").textContent = isOn ? "💡 Light is ON" : "💡 Light is OFF";
+      document.getElementById("light").innerHTML = isOn
+  ? '💡 Light is <span style="color:green;font-weight:bold">ON</span>'
+  : '💡 Light is <span style="color:red;font-weight:bold">OFF</span>';
+
+    }
+
+    let name = "Alice";
+    function switchName() {
+      name = name === "Alice" ? "Bob" : "Alice";
+      document.getElementById("name").textContent = name;
+    }
+
+    let color = "red";
+    function changeColor() {
+      if (color === "red") color = "green";
+      else if (color === "green") color = "blue";
+      else color = "red";
+      document.getElementById("box").style.background = color;
+    }
+
+    
+    let count = 0;
+    let goingUp = true;
+    setInterval(() => {
+      count = goingUp ? count + 1 : count - 1;
+      document.getElementById("count").textContent = count;
+    }, 300);
+
+    function changeDirection() {
+      goingUp = !goingUp;
+    }
+  </script>
+
+</body>
+</html>

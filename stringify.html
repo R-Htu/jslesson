@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h2>🔍 What is JSON.stringify()?</h2>
+    <p>JSON.stringify() converts a JavaScript object or array into a JSON string.</p>
+    <p>This is useful when:</p>
+    <ul>
+        <li>You want to send data to a server.</li>
+        <li>You want to store data in localStorage.</li>
+        <li>You want to see a readable version of your object in a log.</li>
+    </ul>
+
+    <script>
+       //✅ Basic Example
+
+       const person = {
+            name: "Alice",
+            age: 25,
+            isStudent: false
+        };
+
+        const jsonString = JSON.stringify(person);
+        console.log(jsonString);
+        // Output: {"name":"Alice","age":25,"isStudent":false}
+
+
+        //✅ Example 2: Array of Objects
+        const students = [
+            { name: "John", grade: "A" },
+            { name: "Jane", grade: "B" }
+        ];
+
+        const jsonStr = JSON.stringify(students);
+
+        console.log(jsonStr);
+        // Output: [{"name":"John","grade":"A"},{"name":"Jane","grade":"B"}]
+
+        //✅ Example 3: Store in localStorage
+        const settings = {
+            darkMode: true,
+            fontSize: 16
+        };
+
+        localStorage.setItem("appSettings", JSON.stringify(settings));
+        const saved = JSON.parse(localStorage.getItem("appSettings"));
+        console.log(saved.darkMode); // true
+
+        //✅ Example 4: Pretty Formatting
+        //JSON.stringify(value, replacer, space)
+        /*
+        ▶️ value — the object or array you want to stringify
+        ▶️ replacer — (optional) a function or array to filter what to include
+        ▶️ space — (optional) how many spaces to use for indentation in the output (makes it easier to read)
+        */
+        const data = { name: "Tom", score: 80,grade:6 };
+        console.log(JSON.stringify(data, null, 4));
+        /*
+        {
+        "name": "Tom",
+        "score": 80
+        }
+        */
+
+        //✅ Example 5: Removing some properties
+        const user = { id: 1, name: "Lisa", password: "secret" };
+        const safeString = JSON.stringify(user, ["id", "name"]);
+        console.log(safeString);
+        // Output: {"id":1,"name":"Lisa"}
+
+        const person2 = { name: "Anna", age: 25, city: "Rome" };
+
+        const replacer = (key, value) => {
+        return typeof value === "number" ? undefined : value;
+        };
+
+        console.log(JSON.stringify(person2, replacer, 2));
+        /*
+        Output: {
+            "name": "Anna",
+            "city": "Rome"
+        }
+
+        */
+
+        const product = { name: "Book", price: 15 };
+
+        const replace = (key, value) => {
+        if (key === "price") {
+            return `$${value}`; // add $ to the price
+        }
+        return value;
+        };
+
+        console.log(JSON.stringify(product, replace, 2));
+        /*
+        {
+            "name": "Book",
+            "price": "$15"
+        }
+
+        */
+
+    </script>
+
+</body>
+</html>

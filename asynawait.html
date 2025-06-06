@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Async Await Fetch</title>
+  <style>
+    pre{
+      color:white;
+      background-color: rgb(59, 56, 56);
+    }
+  </style>
+</head>
+<body>
+  <h1 style="text-align: center;">Async Await</h1>
+  <h2>🧠 Concept Recap (in simple words):</h2>
+  <p>async makes a function return a Promise.await waits for a Promise to finish (without blocking the whole program).
+     You only use await inside an async function.</p>
+     <h2>✅ Example 1: Basic async Function</h2>
+     <pre>
+      <code>
+      async function sayHello() { 
+          return "Hello!"; 
+      } 
+       sayHello().then(message => { console.log(message); // Output: Hello!
+
+  });
+
+  💡 Even though we return a string, it becomes a Promise automatically because of async.
+      </code>
+     </pre>
+  
+  <h2>✅ Example 2: Using await with a Promise</h2>
+  <pre>
+    <code>
+      function waitOneSecond() { 
+        return new Promise(resolve => { 
+          setTimeout(() => { resolve("Done waiting!"); }, 1000); 
+        }); 
+      } 
+      async function run() {
+         console.log("Waiting..."); 
+         const result = await waitOneSecond();
+          console.log(result); // Output after 1 second: Done waiting! 
+      }
+       run(); 
+
+💡 await pauses the function until the promise resolves.
+
+    </code>
+  </pre>
+  <h2>✅ Example 3: Await Multiple Steps</h2>
+  <pre>
+    <code>
+      function delay(ms) { 
+        return new Promise(resolve => setTimeout(resolve, ms)); 
+      } 
+      async function countDown() {
+         console.log("3..."); 
+         await delay(1000);
+         console.log("2..."); 
+         await delay(1000); 
+         console.log("1...");
+        await delay(1000);
+         console.log("Go!"); 
+      }
+    countDown(); 
+
+💡 Great for showing how await creates readable, step-by-step async logic.
+    </code>
+  </pre>
+
+  <h2>✅ Example 4: Error Handling with try...catch</h2>
+  <pre>
+    <code>
+      function mightFail() { 
+        return new Promise((resolve, reject) => { 
+          const success = Math.random() > 0.5; 
+          setTimeout(() => { 
+            if (success) {
+             resolve("Success!");
+           } else { 
+            reject("Oops, something went wrong."); 
+          } }, 1000); 
+        });
+       } 
+      async function tryIt() {
+         try {
+           const result = await mightFail(); 
+           console.log(result); 
+        } catch (error) { 
+          console.error("Error:", error); 
+        }}
+      tryIt(); 
+
+💡 Use this to show how to deal with failed promises using try...catch.
+    </code>
+  </pre>
+
+  <h2>✅ Example 5: Looping with await</h2>
+  <pre>
+    <code>
+      function fakeApiCall(i) { 
+        return new Promise(resolve => {
+           setTimeout(() => resolve(Result ${i}
+           ), 1000);
+        });
+     } 
+      async function loadAll() { 
+        for (let i = 1; i <= 3; i++) { 
+          const result = await fakeApiCall(i);
+           console.log(result); 
+        }
+      } 
+    loadAll(); 
+
+💡 Shows how to wait for each step in a loop – good for understanding real-world use cases like API calls.
+
+    </code>
+  </pre>
+
+  <h2>User Data</h2>
+
+  <button onclick="getUser()">Get User</button>
+  <pre id="json"></pre>
+  <p>******************************************************</p>
+  <pre id="result"></pre>
+
+    <h1>Async/Await Demo</h1>
+  <button onclick="runExample()">Click to Start</button>
+  <p id="status"></p>
+  <script>
+    
+    async function sayHello() { 
+      return "Hello!"; 
+    } 
+    sayHello().then(message => { console.log(message); // Output: Hello!
+
+  });
+
+
+    function waitOneSecond() { 
+        return new Promise(resolve => { 
+          setTimeout(() => { resolve("Done waiting!"); }, 1000); 
+        }); 
+      } 
+    async function run() {
+         console.log("Waiting..."); 
+         const result = await waitOneSecond();
+          console.log(result); // Output after 1 second: Done waiting! 
+      }
+       run(); 
+  
+
+      function delay(ms) { 
+        return new Promise(resolve => setTimeout(resolve, ms)); 
+      } 
+      async function countDown() {
+         console.log("3..."); 
+         await delay(1000);
+         console.log("2..."); 
+         await delay(1000); 
+         console.log("1...");
+        await delay(1000);
+         console.log("Go!"); 
+      }
+    countDown(); 
+
+      function mightFail() { 
+        return new Promise((resolve, reject) => { 
+          const success = Math.random() > 0.5; 
+          setTimeout(() => { 
+            if (success) {
+             resolve("Success!");
+           } else { 
+            reject("Oops, something went wrong."); 
+          } }, 1000); 
+        });
+       } 
+      async function tryIt() {
+         try {
+           const result = await mightFail(); 
+           console.log(result); 
+        } catch (error) { 
+          console.error("Error:", error); 
+        }}
+      tryIt(); 
+    
+          function fakeApiCall(i) { 
+        return new Promise(resolve => {
+           setTimeout(() => 
+           resolve(`Result ${i}`), 1000);
+        });
+     } 
+      async function loadAll() { 
+        for (let i = 1; i <= 3; i++) { 
+          const result = await fakeApiCall(i);
+           console.log(result); }
+      } 
+    loadAll(); 
+    async function getUser() {
+      const res = await fetch('https://jsonplaceholder.typicode.com/users/1');
+      const user = await res.json();
+      document.getElementById('json').textContent = user.name;
+      document.getElementById('result').textContent = user.company.name;
+    }
+
+     async function fetchData() {
+        try {
+            const res = await fetch('https://jsonplaceholder.typicode.com/posts/2'); 
+            //'https://jsonplaceholder.typicode.com/posts/123456789'
+
+            if (!res.ok) throw new Error(`Network error: ${res.status}`);
+            const data = await res.json();
+            console.log('Data:', data);
+            document.getElementById('result').textContent = data.body;
+        } catch (error) {
+            console.error('Error:', error.message);
+        }
+     }
+
+  fetchData();
+
+   function delay(ms) {
+      return new Promise(resolve => setTimeout(resolve, ms));
+    }
+
+    async function runExample() {
+      document.getElementById('status').textContent = 'Waiting 1 second...';
+      await delay(1000);
+
+      document.getElementById('status').textContent = 'Still waiting...';
+      await delay(1000);
+
+      document.getElementById('status').textContent = 'Done!';
+    }
+  </script>
+</body>
+</html>
