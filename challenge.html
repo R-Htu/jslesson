@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>CO₂ Tracker Tycoon</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    .round {
+      background-color: gray;
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      padding: 3px;
+      display: inline-block;
+      color: white;
+      text-align: center;
+      font-weight: bold;
+      
+    }
+  </style>
+</head>
+<body>
+  <h1>CO₂ Tracker Tycoon 🌍 - Advanced</h1>
+  <p>You are the mayor! Choose green policies to reduce emissions and energy use.</p>
+
+  <div class="dashboard">
+    <div class="policy-buttons">
+      <button onclick="applyPolicy('solar')">☀️ Build Solar Farm <span class="round" data-policy="solar">0</span></button>
+      <button onclick="applyPolicy('bike')">🚴 Promote Biking <span class="round" data-policy="bike">0</span></button>
+      <button onclick="applyPolicy('factory')">🏭 Limit Factory Output <span class="round" data-policy="factory">0</span></button>
+      <button onclick="saveProgress()">💾 Save Progress</button>
+      <button onclick="loadProgress()">📂 Load Progress</button>
+    </div>
+
+    <div class="charts">
+      <canvas id="co2Chart"></canvas>
+      <canvas id="energyChart"></canvas>
+    </div>
+
+    <div class="ai-suggestion" id="aiSuggestion">AI Suggestion will appear here...</div>
+    <div class="achievements" id="achievements">Achievements: None yet</div>
+    <div class="event-log" id="eventLog">Event log will appear here...</div>
+  </div>
+
+  <script>
+    let co2Levels = [100];
+    let labels = ["Start"];
+    let round = 1;
+
+    const policyCounts = {
+      solar: 0,
+      bike: 0,
+      factory: 0
+    };
+
+    const co2Chart = new Chart(document.querySelector('#co2Chart'), {
+      type: "line",
+      data: {
+        labels: labels,
+        datasets: [{
+          label: "CO₂ Level",
+          borderColor: '#e53935',
+          data: co2Levels,
+          fill: false
+        }]
+      }
+    });
+
+    const applyPolicy = policy => {
+      let co2Change = 0;
+      if (policy === 'solar') co2Change = -10;
+      else if (policy === 'bike') co2Change = -7;
+      else if (policy === 'factory') co2Change = -15;
+
+      // Update graph data
+      const lastValue = co2Levels[co2Levels.length - 1];
+      console.log(lastValue);
+      co2Levels.push(lastValue + co2Change);
+      labels.push("Round " + round++);
+      co2Chart.update();
+
+      // Update count for the button
+      policyCounts[policy]++;
+      const counterSpan = document.querySelector(`.round[data-policy="${policy}"]`);
+      if (counterSpan) {
+        counterSpan.textContent = policyCounts[policy];
+      }
+    }
+
+    function saveProgress() {
+      alert("Save not implemented yet.");
+    }
+
+    function loadProgress() {
+      alert("Load not implemented yet.");
+    }
+  </script>
+</body>
+</html>
