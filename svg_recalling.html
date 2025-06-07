@@ -76,10 +76,170 @@
     <svg width="100" height="100" style="border:1px solid black">
         <path d="M10 80 Q95 10 180 80" stroke="green" fill="none" stroke-width="2"/>
     </svg>
+    <h3>✅ Curve fits the canvas</h3>
+    <svg width="200" height="100" style="border:1px solid gray;">
+        <!-- Start point -->
+        <circle cx="10" cy="80" r="3" fill="black" />
+        <!-- Control point -->
+        <circle cx="100" cy="10" r="3" fill="red" />
+        <!-- End point -->
+        <circle cx="190" cy="80" r="3" fill="blue" />
+        
+        <!-- Green Curve -->
+        <path d="M10 80 Q100 10 190 80" stroke="green" fill="none" stroke-width="2"/>
+    </svg>
+    <h3>❌ Curve goes beyond the SVG width</h3>
+    <svg width="100" height="100" style="border:1px solid gray;">
+        <!-- Only part of the curve shows -->
+        <circle cx="10" cy="80" r="3" fill="black" />
+        <circle cx="95" cy="10" r="3" fill="red" />
+        <circle cx="180" cy="80" r="3" fill="black" />
+        
+        <!-- Green Curve -->
+        <path d="M10 80 Q95 10 180 80" stroke="green" fill="none" stroke-width="2"/>
+    </svg>
+
+    <h3>✅ Adjusted to fit small canvas</h3>
+    <svg width="100" height="100" style="border:1px solid gray;">
+        <!-- Start point -->
+        <circle cx="10" cy="80" r="3" fill="black" />
+        <!-- Control point -->
+        <circle cx="50" cy="10" r="3" fill="red" />
+        <!-- End point -->
+        <circle cx="90" cy="80" r="3" fill="black" />
+
+        <!-- Green Curve -->
+        <path d="M10 80 Q50 10 90 80" stroke="green" fill="none" stroke-width="2"/>
+        <path d="M10 80 C30 10, 70 10, 90 80" />
+
+    </svg>
+
+    <svg width="200" height="200" viewBox="0 0 100 100" style="border:1px solid gray;">
+        <path d="M50 0 C80 20, 100 50, 50 100 C0 50, 20 20, 50 0 Z" fill="#90ee90" stroke="black"/>
+    </svg>
+    <pre style="background-color: rgb(48, 47, 47); color: white;">
+        🧠 What is C in SVG Path?
+        C means Cubic Bézier Curve.
+        It draws a curved line using:
+
+        2 control points and
+
+        1 end point
+
+        Syntax:
+        mathematica
+        Kopieren
+        Bearbeiten
+        C x1 y1, x2 y2, x y
+        x1 y1: First control point
+
+        x2 y2: Second control point
+
+        x y: Final point (where the curve ends)
+
+        It starts from the current position.
+            </pre>
+    <h3>Simple C curve</h3>
+    <svg width="300" height="120" style="border:1px solid gray;">
+        <!-- Start point -->
+        <circle cx="50" cy="100" r="3" fill="black" />
+        <!-- Control points -->
+        <circle cx="150" cy="0" r="3" fill="red" />
+        <circle cx="250" cy="0" r="3" fill="blue" />
+        <!-- End point -->
+        <circle cx="250" cy="100" r="3" fill="black" />
+        
+        <!-- The curve -->
+        <path d="M50 100 C150 0, 250 0, 250 100" 
+                stroke="green" fill="none" stroke-width="2"/>
+    </svg>
+
+    <h3>Reversed curve</h3>
+    <svg width="300" height="120" style="border:1px solid gray;">
+        <!-- Start point -->
+        <circle cx="250" cy="100" r="3" fill="black" />
+        <!-- Control points -->
+        <circle cx="150" cy="0" r="3" fill="red" />
+        <circle cx="50" cy="0" r="3" fill="blue" />
+        <!-- End point -->
+        <circle cx="50" cy="100" r="3" fill="black" />
+
+        <!-- The curve -->
+        <path d="M250 100 C150 0, 50 0, 50 100" 
+                stroke="purple" fill="none" stroke-width="2"/>
+    </svg>
+
+    <h3>Half heart with two C curves</h3>
+    <svg width="200" height="200" viewBox="0 0 100 100" style="border:1px solid gray;">
+        <path d="M50 0 
+                C80 20, 100 50, 50 100 
+                C0 50, 20 20, 50 0" 
+                fill="pink" stroke="red" stroke-width="2"/>
+    </svg>
+    <!-- No viewBox -->
+    <svg width="200" height="200" style="border:1px solid gray;">
+        <path d="M50 0 
+            C80 20, 100 50, 50 100 
+            C0 50, 20 20, 50 0" 
+            fill="pink" stroke="red" stroke-width="2"/>
+    </svg>
+
+    <h3>Back-to-back C curves</h3>
+    <svg width="300" height="200" style="border:1px solid gray;">
+         <path d="M50 150 
+           C100 100, 200 100, 250 150 
+           C200 200, 100 200, 50 150"
+        stroke="green" fill="lightgreen" stroke-width="2"/>
+    </svg>
+
+    <h3>SVG Cubic Bézier Curve Visualization (C)</h3>
+    <svg width="300" height="150" style="border:1px solid gray;">
+        <!-- Dashed lines to control points -->
+        <line x1="50" y1="100" x2="150" y2="0" stroke="lightgray" stroke-dasharray="4" />
+        <line x1="250" y1="0" x2="250" y2="100" stroke="lightgray" stroke-dasharray="4" />
+
+        <!-- Start and end points -->
+        <circle cx="50" cy="100" r="4" fill="black" />
+        <circle cx="250" cy="100" r="4" fill="black" />
+
+        <!-- Control points -->
+        <circle cx="150" cy="0" r="4" fill="red" />
+        <circle cx="250" cy="0" r="4" fill="blue" />
+
+        <!-- Curve path -->
+        <path d="M50 100 C150 0, 250 0, 250 100"
+                stroke="green" fill="none" stroke-width="2" />
+    </svg>
+
+    <h3>Example 1: With viewBox="0 0 100 100"</h3>
+    <svg width="200" height="200" viewBox="0 0 100 100" style="border:1px solid gray;">
+        <!-- Circle in the center of the viewBox -->
+        <circle cx="50" cy="50" r="40" fill="skyblue" />
+    </svg>
+
+    <h3>Example 2: No viewBox</h3>
+        <svg width="200" height="200" style="border:1px solid gray;">
+        <!-- Circle at pixel coordinates (50,50) -->
+        <circle cx="50" cy="50" r="40" fill="orange" />
+    </svg>
+
+    <h3>Example 3: Zoomed-in ViewBox</h3>
+    <svg width="200" height="200" viewBox="0 0 50 50" style="border:1px solid gray;">
+        <!-- Circle is centered at (50,50) but we zoom in so we only see top-left part -->
+        <circle cx="50" cy="50" r="40" fill="pink" />
+    </svg>
+
+
+
+
+
+
+
+
+
+
     <script>
-        let age = 18;
-        let message = age === 18 ? "Yes" : "No";
-        console.log(message)
+    
     </script>
 </body>
 </html>
