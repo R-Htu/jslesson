@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Green Habit</title>
+  <style>
+	body {
+	  background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
+	  margin: 0;
+	  font-family: 'Segoe UI', sans-serif;
+	  display: flex;
+	  flex-direction: column;
+	  align-items: center;
+	  justify-content: flex-start;
+	  min-height: 100vh;
+	  color: #fff;
+	  padding: 2rem;
+	  position: relative;
+	  overflow: hidden;
+	}
+	.static-leaves {
+	  position: absolute;
+	  top: 0;
+	  left: 0;
+	  width: 100%;
+	  height: 100%;
+	  pointer-events: none;
+	  z-index: 0;
+	  overflow: hidden;
+	}
+
+	 .static-leaf {
+	   position: absolute;
+	   width: 60px;
+	   height: 60px;
+	   opacity: 0.08;
+}
+
+	.heading-wrapper {
+	  position: relative;
+	  width: fit-content;
+	  margin-top: 2rem;
+	}
+
+	.leaf-bg {
+	  position: absolute;
+	  top: -40px;
+	  left: -60px;
+	  width: 250px;
+	  height: 200px;
+	  opacity: 0.15;
+	  z-index: 0;
+	  transform: rotate(-10deg);
+	}
+
+	.rainbow {
+	  font-size: 3.5rem;
+	  text-align: center;
+	  background: linear-gradient(
+		to right,
+		red,
+		orange,
+		yellow,
+		green,
+		blue,
+		indigo,
+		violet
+	  );
+	  background-clip: text;
+	  color: transparent;
+	  background-size: 400%;
+	  animation: flow 4s ease-in-out infinite;
+	  text-shadow: 0 0 15px rgba(255, 255, 255, 0.3),
+		0 0 25px rgba(255, 255, 255, 0.2);
+	  z-index: 1;
+	  position: relative;
+	}
+
+	@keyframes flow {
+	  0% {
+		background-position: 0% 50%;
+	  }
+	  100% {
+		background-position: 100% 50%;
+	  }
+	}
+
+	.leaf {
+	  width: 150px;
+	  height: 150px;
+	  margin-top: 2rem;
+	  /*box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);*/
+	  transition: transform 0.3s ease;
+    }
+
+	.habit {
+	  font-size: 1.8rem;
+	  color: #90ee90;
+	  text-shadow: 0 0 8px rgba(144, 238, 144, 0.6);
+	}
+
+	.floating-leaf {
+	  position: absolute;
+	  width: 40px;
+	  height: 40px;
+	  opacity: 0.2;
+	  animation: falling 12s linear infinite;
+	  pointer-events: none;
+	}
+
+	@keyframes falling {
+	  0% {
+		transform: translateY(0) rotate(0deg);
+	  }
+	  100% {
+		transform: translateY(120vh) rotate(360deg);
+	  }
+	}
+  </style>
+</head>
+<body>
+	 <div class="static-leaves"></div>
+
+  <svg class="static-leaf" style="top: 10%; left: 5%; transform: rotate(15deg);" viewBox="0 0 100 100">
+	<path d="M50 0 Q75 25 50 100 Q25 25 50 0 Z" fill="#90ee90" />
+  </svg>
+  <svg class="static-leaf" style="top: 30%; left: 80%; transform: rotate(-20deg);" viewBox="0 0 100 100">
+	<path d="M50 0 C70 10, 80 90, 50 100 C20 90, 30 10, 50 0 Z" fill="#90ee90" />
+  </svg>
+  <svg class="static-leaf" style="top: 70%; left: 20%; transform: rotate(40deg);" viewBox="0 0 100 100">
+	<path d="M50 0 C80 20, 100 50, 50 100 C0 50, 20 20, 50 0 Z" fill="#90ee90" />
+  </svg>
+  <svg class="static-leaf" style="top: 40%; left: 15%; transform: rotate(15deg);" viewBox="0 0 100 100">
+	<path d="M50 0 Q75 25 50 100 Q25 25 50 0 Z" fill="#90ee90" />
+  </svg>
+  <svg class="static-leaf" style="top: 10%; left: 40%; transform: rotate(-20deg);" viewBox="0 0 100 100">
+	<path d="M50 0 C70 10, 80 90, 50 100 C20 90, 30 10, 50 0 Z" fill="#90ee90" />
+  </svg>
+  
+  <div class="heading-wrapper">
+	<svg class="leaf-bg" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid meet">
+	  <path d="M50 0 C80 20, 100 50, 50 100 C0 50, 20 20, 50 0 Z" fill="#90ee90" />
+	</svg>
+	<h1 class="rainbow">Green Habit</h1>
+  </div>
+
+  <svg class="leaf" viewBox="0 0 100 100">
+  <path d="M50 0 C80 20, 100 50, 50 100 C0 50, 20 20, 50 0 Z" fill="rgba(155,120,19, 0.05)" />
+</svg>
+  	<h2 class="habit">🌱 First Habit</h2>
+	<p>Start your day by planting a seed — even a small one counts toward a greener future!</p>
+
+
+
+<script>
+const leafShapes = [
+  "M50 0 C80 20, 100 50, 50 100 C0 50, 20 20, 50 0 Z",
+  "M50 0 Q75 25 50 100 Q25 25 50 0 Z",
+  "M50 0 C70 10, 80 90, 50 100 C20 90, 30 10, 50 0 Z"
+];
+
+const autumnColors = [
+  "#FF7F50", // coral
+  "#FFA500", // orange
+  "#FFD700", // gold
+  "#FF6347", // tomato
+  "#CD5C5C", // indian red
+  "#8B4513", // saddle brown
+  "#D2691E"  // chocolate
+];
+
+function createLeaf() {
+  const leaf = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+  leaf.setAttribute("class", "floating-leaf");
+  leaf.setAttribute("viewBox", "0 0 100 100");
+  leaf.style.left = Math.random() * 100 + "vw";
+  leaf.style.animationDuration = 8 + Math.random() * 5 + "s";
+
+  const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
+  path.setAttribute("d", leafShapes[Math.floor(Math.random() * leafShapes.length)]);
+  path.setAttribute("fill", autumnColors[Math.floor(Math.random() * autumnColors.length)]);
+
+  leaf.appendChild(path);
+  document.body.appendChild(leaf);
+
+  setTimeout(() => leaf.remove(), 15000);
+}
+
+setInterval(createLeaf, 800);
+  
+  function generateStaticLeaves(count = 30) {
+	const container = document.querySelector('.static-leaves');
+
+	for (let i = 0; i < count; i++) {
+	  const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+	  svg.setAttribute("class", "static-leaf");
+	  svg.setAttribute("viewBox", "0 0 100 100");
+	  svg.style.top = Math.random() * 100 + "vh";
+	  svg.style.left = Math.random() * 100 + "vw";
+	  svg.style.transform = `rotate(${Math.random() * 360}deg) scale(${0.8 + Math.random() * 0.6})`;
+
+	  const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
+	  path.setAttribute("d", leafShapes[Math.floor(Math.random() * leafShapes.length)]);
+	  path.setAttribute("fill", autumnColors[Math.floor(Math.random() * autumnColors.length)]);
+
+
+	  svg.appendChild(path);
+	  container.appendChild(svg);
+	}
+  }
+
+  generateStaticLeaves(40); 
+  
+</script>
+</body>
+</html>
