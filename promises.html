@@ -54,8 +54,23 @@
     <button onclick="runPromise()">Start Task</button>
     <div id="result" class="status"></div>
   </div>
-
   <script>
+
+    const promise = new Promise((resolve,reject)=>{
+      resolve('successful');
+      reject("error");
+    });
+    promise.then(
+      function(value){
+        console.log(value);
+      },
+     // (val)=>console.log(val),
+     function(err){
+      console.log(err)
+     }
+     // (err)=>console.log(err)
+    )
+
     /*
     const promise = new Promise((resolve, reject) => {
   // async task
@@ -63,16 +78,20 @@
  */
     //🧪 Example 1: A Basic Promise That Resolves
     console.log('first clg')
-    const myPromise = new Promise((resolve, reject) => {
+    console.log('tesing 1')
+
+    const p = new Promise((resolve, reject) => {
         setTimeout(() => {
             resolve("✅ second clg");
+          
         }, 1000);
-        });
+    });
 
-        myPromise.then(result => {
-        console.log(result);  // Logs after 1 second
+    p.then(s => {
+        console.log(s);  // Logs after 1 second
     });
     console.log('Third clg')
+    console.log('testing 3')
 
     //❌ Example 2: A Promise That Rejects     
     const errorPromise = new Promise((resolve, reject) => {
@@ -86,9 +105,12 @@
         .catch(error => console.error(error));  // Logs the error
 
     //🔁 Example 3: Chaining Promises
+
+
+
     const double = num => {
         return new Promise(resolve => {
-            setTimeout(() => resolve(num * 2), 500);
+            setTimeout(() => resolve(num * 2), 3000);
         });
     };
 
@@ -97,6 +119,11 @@
         .then(result => double(result))
         .then(final => console.log("Result:", final)); // 2 → 4 → 8 → logs 8
         
+
+
+
+
+
     //🧠 Bonus: Async/Await Version
     async function runTask() {
         const result = await new Promise(resolve => {

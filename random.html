@@ -7,12 +7,41 @@
 </head>
 <body>
     <script>
+        const num1 = Math.random();
+        console.log("num1 is " + num1)
+        console.log('============================')
+        const productWith10 = num1 * 10; 
+        console.log("Product with 10: " + productWith10);
+        console.log('=======================')
+        //Math floor
+        console.log("Intenger: " + Math.floor(productWith10));
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         //🌟 1. Generate a random decimal between 0 and 1
         const randomNumber = Math.random();
-        console.log(randomNumber); // Example: 0.735832917
-        console.log(randomNumber*10);
-        console.log(Math.floor(randomNumber*10));
+        // 0 နဲ့ ၁ ကြား 
+        let num = randomNumber;//0.73
+        console.log("Random number:" + num); 
+        let result = num *10
+        console.log(result)//7.3
+        //console.log("product 10"+ num*10);
+        console.log("ကိန်းပြည့် " + Math.floor(result)); //7
 
         //🎲 2. Random whole number between 0 and 9
         const randomInt = Math.floor(Math.random() * 10);
@@ -25,14 +54,25 @@
         //🍭 4. Pick a random item from an array
         const fruits = ["🍎", "🎯", "🍇", "🍉", "🍍"];
         const ran = Math.random() * fruits.length;
-        console.log(ran);
-        console.log(Math.floor(ran))
+        console.log("ran "+ ran);
+        console.log("ran internger "+ Math.floor(ran))
         const randomFruit = fruits[Math.floor(ran)];
+        //fruits[]
         console.log(randomFruit); // Example: 🍇
+
         console.log(Math.floor(5.34))
 
         //🧠 5. Random yes or no
-        const answer = Math.random() > 0.5 ? "Yes" : "No";
+       /* let age = 18; 
+        if (age === 18){
+            console.log("Yes you can")
+        }else{
+           console.log("no you cant")
+        }
+        age === 18? "Yes you ca" : "No you can't";*/
+        const numTest = Math.random();
+        console.log("NumTest " +numTest);
+        const answer = numTest > 0.5 ? "Yes" : "No";
         console.log(answer); // Example: Yes
 
         //🧒 Bonus Game: Random student picker

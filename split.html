@@ -13,8 +13,8 @@
     <script>
         const sentence = "I love learning JavaScript!";
         const words = sentence.split(" ");
-        console.log(words); //["I", "love", "learning", "JavaScript!"]
-
+        console.log(words); //["I" , "love", "learning", "JavaScript!"]
+      //const array = ['hello', 'hey',]
         const data = "apple,banana,grape,orange";
         const fruits = data.split(",");
         console.log(fruits);//["apple", "banana", "grape", "orange"]
@@ -23,12 +23,19 @@
         const letters = word.split("");
         console.log(letters); //["h", "e", "l", "l", "o"]
 
+        // id= "container-0"
+        // id = ["container", "0"]
+        //id[1] // 0
+        // id = "container-1"
+        //id.split("-")[1]
         const phone = "123-456-7890";
         const parts = phone.split("-");
-        console.log(parts); //["123", "456", "7890"]
-        console.log(parts[1])
+       console.log(parts); //["123", "456", "7890"]
+        console.log(parts[1]) // 456
 
         const sent = "Sorting is fun and educational";
+        // const arr =["Sorting", "is", "fun", "and", "eductanal"]
+        //arr.join(', ') // Sorting: is: fun: and: educational
         const lastWord = sent.split(" ").pop();  // .pop() gets the last item
         console.log(lastWord);//"educational"
 
@@ -36,7 +43,7 @@
         const text = document.getElementById("input").value;
         const words = text.split(" ");
         console.log(words);
-        document.getElementById("result").textContent = "Words: " + words.join('; ');
+        document.getElementById("result").textContent = "Words: " + words.join(' , ');
     }
 
     </script>

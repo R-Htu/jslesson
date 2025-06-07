@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>SVG Tutorial - Leaf Example</title>
+  <style>
+    body {
+      background: #f9f9f9;
+      font-family: Arial, sans-serif;
+      line-height: 1.6;
+      padding: 20px;
+      color: #333;
+    }
+    h1 {
+      color: #2c7a7b;
+    }
+    h2 {
+      color: #2c7a7b;
+    }
+    svg {
+      margin: 10px 0;
+      border: 1px solid #ccc;
+      background: white;
+    }
+    .lesson {
+      border-left: 5px solid #2c7a7b;
+      padding-left: 10px;
+      margin-bottom: 30px;
+    }
+    code {
+      background: #f0f0f0;
+      padding: 2px 4px;
+      border-radius: 3px;
+      display: block;
+      white-space: pre-wrap;
+    }
+    pre {
+      background: #f8f8f8;
+      padding: 10px;
+      overflow-x: auto;
+      border: 1px solid #ccc;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>SVG Tutorial — Building a Leaf Shape</h1>
+
+  <div class="lesson">
+    <h2>🟢 Lesson 1 — What is SVG?</h2>
+    <p>SVG stands for <strong>Scalable Vector Graphics</strong>.</p>
+    <ul>
+      <li>It is an XML-based language for describing shapes, paths, and images.</li>
+      <li>You can use it inline in HTML, or in separate <code>.svg</code> files.</li>
+      <li>SVG shapes are resolution-independent — they scale perfectly.</li>
+    </ul>
+
+    <p>Example:</p>
+    <svg width="100" height="100">
+      <circle cx="50" cy="50" r="40" fill="green" />
+    </svg>
+
+    <pre><code>&lt;svg width="100" height="100"&gt;
+  &lt;circle cx="50" cy="50" r="40" fill="green" /&gt;
+&lt;/svg&gt;
+</code></pre>
+  </div>
+
+  <div class="lesson">
+    <h2>🟢 Lesson 2 — Basic shapes</h2>
+    <p>SVG has built-in shapes:</p>
+    <svg width="200" height="100">
+      <rect x="10" y="10" width="100" height="50" fill="blue" />
+      <circle cx="150" cy="50" r="30" fill="red" />
+    </svg>
+
+    <pre><code>&lt;svg width="200" height="100"&gt;
+  &lt;rect x="10" y="10" width="100" height="50" fill="blue" /&gt;
+  &lt;circle cx="150" cy="50" r="30" fill="red" /&gt;
+&lt;/svg&gt;
+</code></pre>
+
+    <ul>
+      <li><code>rect</code> → rectangle</li>
+      <li><code>circle</code> → circle</li>
+      <li><code>ellipse</code> → ellipse</li>
+      <li><code>line</code> → line</li>
+      <li><code>polygon</code> → many-pointed shape</li>
+      <li><code>polyline</code> → open line shape</li>
+      <li><code>path</code> → most flexible → allows any shape (your leaf uses this!)</li>
+    </ul>
+  </div>
+
+  <div class="lesson">
+    <h2>🟢 Lesson 3 — The &lt;path&gt; element</h2>
+    <p>This is the most important for you, since your leaf shape is a path.</p>
+
+    <svg width="100" height="100">
+      <path d="M10 80 Q95 10 180 80" stroke="green" fill="none" stroke-width="2"/>
+    </svg>
+
+    <pre><code>&lt;svg width="100" height="100"&gt;
+  &lt;path d="M10 80 Q95 10 180 80" stroke="green" fill="none" stroke-width="2"/&gt;
+&lt;/svg&gt;
+</code></pre>
+
+    <p><strong>d</strong> attribute describes the shape:</p>
+    <ul>
+      <li><code>M</code> = move to a point (start position)</li>
+      <li><code>L</code> = line to</li>
+      <li><code>C</code> = cubic Bezier curve</li>
+      <li><code>Q</code> = quadratic Bezier curve</li>
+      <li><code>Z</code> = close path</li>
+    </ul>
+    <p>Bezier curves are how you get beautiful, flowing leaf shapes.</p>
+  </div>
+
+  <div class="lesson">
+    <h2>🟢 Lesson 4 — Your leaf path explained</h2>
+
+    <svg width="100" height="100">
+      <path d="M50 0 C80 20, 100 50, 50 100 C0 50, 20 20, 50 0 Z" fill="#90ee90" stroke="black"/>
+    </svg>
+
+    <pre><code>&lt;svg width="100" height="100"&gt;
+  &lt;path d="M50 0 C80 20, 100 50, 50 100 C0 50, 20 20, 50 0 Z" fill="#90ee90" stroke="black"/&gt;
+&lt;/svg&gt;
+</code></pre>
+
+    <p>What this does:</p>
+    <ul>
+      <li><code>M50 0</code> → move to (50, 0) — top middle of the viewBox</li>
+      <li><code>C80 20, 100 50, 50 100</code> → curve to (50, 100)</li>
+      <li><code>C0 50, 20 20, 50 0</code> → curve back to (50, 0)</li>
+      <li><code>Z</code> → close path</li>
+    </ul>
+    <p>👉 This creates a <strong>symmetrical leaf shape</strong> with two curves forming the sides.</p>
+  </div>
+
+  <div class="lesson">
+    <h2>🟢 Lesson 5 — ViewBox</h2>
+
+    <svg viewBox="0 0 100 100" width="100" height="100">
+      <path d="M50 0 C80 20, 100 50, 50 100 C0 50, 20 20, 50 0 Z" fill="#90ee90" stroke="black"/>
+    </svg>
+
+    <pre><code>&lt;svg viewBox="0 0 100 100" width="100" height="100"&gt;
+  &lt;path d="M50 0 C80 20, 100 50, 50 100 C0 50, 20 20, 50 0 Z" fill="#90ee90" stroke="black"/&gt;
+&lt;/svg&gt;
+</code></pre>
+
+    <p>This says:</p>
+    <ul>
+      <li>Treat coordinates 0..100 in X and Y directions.</li>
+      <li>The leaf path is designed within this 100×100 grid, which then scales to the display.</li>
+    </ul>
+  </div>
+
+  <div class="lesson">
+    <h2>🟢 Lesson 6 — Building a leaf from scratch</h2>
+
+    <h3>Step 1: Just move and draw a line</h3>
+    <svg width="100" height="100" viewBox="0 0 100 100">
+      <path d="M50 0 L50 100" stroke="black" fill="none"/>
+    </svg>
+
+    <pre><code>&lt;svg width="100" height="100" viewBox="0 0 100 100"&gt;
+  &lt;path d="M50 0 L50 100" stroke="black" fill="none"/&gt;
+&lt;/svg&gt;
+</code></pre>
+
+    <h3>Step 2: Add one curve side</h3>
+    <svg width="100" height="100" viewBox="0 0 100 100">
+      <path d="M50 0 C80 20, 100 50, 50 100" stroke="green" fill="none"/>
+    </svg>
+
+    <pre><code>&lt;svg width="100" height="100" viewBox="0 0 100 100"&gt;
+  &lt;path d="M50 0 C80 20, 100 50, 50 100" stroke="green" fill="none"/&gt;
+&lt;/svg&gt;
+</code></pre>
+
+    <h3>Step 3: Add second curve side and close</h3>
+    <svg width="100" height="100" viewBox="0 0 100 100">
+      <path d="M50 0 C80 20, 100 50, 50 100 C0 50, 20 20, 50 0 Z" fill="#90ee90" stroke="black"/>
+    </svg>
+
+    <pre><code>&lt;svg width="100" height="100" viewBox="0 0 100 100"&gt;
+  &lt;path d="M50 0 C80 20, 100 50, 50 100 C0 50, 20 20, 50 0 Z" fill="#90ee90" stroke="black"/&gt;
+&lt;/svg&gt;
+</code></pre>
+  </div>
+
+  <div class="lesson">
+    <h2>Summary of what you already have</h2>
+    <p>👉 You already know this:</p>
+    <pre><code>&lt;path d="M50 0 C80 20, 100 50, 50 100 C0 50, 20 20, 50 0 Z"/&gt;</code></pre>
+
+    <p>👉 Other variations:</p>
+    <pre><code>M50 0 Q75 25 50 100 Q25 25 50 0 Z</code></pre>
+
+    <p>👉 <code>Q</code> is simpler than <code>C</code> (quadratic instead of cubic Bezier).</p>
+  </div>
+
+  <div class="lesson">
+    <h2>🟢 Next Steps — for you to try</h2>
+    <ol>
+      <li>Make an SVG with just a simple path.</li>
+      <li>Modify the path yourself:
+        <ul>
+          <li>Try changing the <code>80 20</code> to <code>90 10</code> → see how the shape changes.</li>
+          <li>Try moving the <code>100 50</code> to <code>90 60</code>.</li>
+        </ul>
+      </li>
+      <li>Play with <code>Q</code> vs <code>C</code>.</li>
+    </ol>
+  </div>
+
+  <div class="lesson">
+    <h2>Final Practice Example — Full simple page</h2>
+    <svg width="200" height="200" viewBox="0 0 100 100">
+      <path d="M50 0 C80 20, 100 50, 50 100 C0 50, 20 20, 50 0 Z" fill="#90ee90" stroke="black"/>
+    </svg>
+
+    <pre><code>&lt;svg width="200" height="200" viewBox="0 0 100 100"&gt;
+  &lt;path d="M50 0 C80 20, 100 50, 50 100 C0 50, 20 20, 50 0 Z" fill="#90ee90" stroke="black"/&gt;
+&lt;/svg&gt;
+</code></pre>
+  </div>
+
+</body>
+</html>
