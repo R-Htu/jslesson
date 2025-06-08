@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Toggle Day/Night Mode</title>
+  <style>
+    body {
+      transition: background 0.5s, color 0.5s;
+    }
+
+    body.night {
+      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+      color: #ddd;
+    }
+
+    .switch-container {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-family: sans-serif;
+      margin: 20px;
+    }
+
+    .switch {
+      position: relative;
+      display: inline-block;
+      width: 60px;
+      height: 30px;
+    }
+
+    .switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: #ccc;
+      transition: 0.4s;
+      border-radius: 30px;
+    }
+
+    .slider::before {
+      position: absolute;
+      content: "";
+      height: 24px;
+      width: 24px;
+      left: 3px;
+      top: 3px;
+      background-color: white;
+      transition: 0.4s;
+      border-radius: 50%;
+    }
+
+    input:checked + .slider {
+      background-color: #2196f3;
+    }
+
+    input:checked + .slider::before {
+      transform: translateX(30px);
+    }
+
+    .switch-label {
+      font-size: 20px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="switch-container">
+    <span class="switch-label">☀️</span>
+    <label class="switch">
+      <input type="checkbox" id="modeToggle" onchange="toggleNightMode()">
+      <span class="slider"></span>
+    </label>
+    <span class="switch-label">🌙</span>
+  </div>
+
+  <h1>Hello World</h1>
+  <p>This is your website with day/night mode!</p>
+
+  <script>
+    function toggleNightMode() {
+      document.body.classList.toggle("night");
+    }
+  </script>
+</body>
+</html>

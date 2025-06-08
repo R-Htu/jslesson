@@ -6,38 +6,92 @@
   <title>CO₂ Tracker Tycoon</title>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <style>
-    .round {
+    *{
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body{
+      text-align: center;
+    }
+    button{
+      border:2px solid transparent;
+      border-top-color:  rgb(39, 37, 37);
+      border-bottom-color: rgb(39, 37, 37);
+      border-radius: 14px 0 14px 0;
+      background: linear-gradient(
+        30deg,
+        rgba(254, 152, 0, 0.3),
+        rgba(3, 253, 249, 0.2),
+        rgba(246, 0, 0, 0.3)
+      );
+      padding: 7px 14px;
+      cursor: pointer;
+      transition:all 0.3s ease-in-out;
+      box-shadow: 0 0 3px black;
+      color: darkslategray;
+      font-weight: 600;
+    }
+    button:hover{
+      background: grey;
+      transform: scale(1.03);
+    }
+    .round{
+      color: green;
+      text-decoration: underline;
+      margin-left: 3px;
+    }
+   /* .round {
       background-color: gray;
-      width: 30px;
+      width:30px;
       height: 30px;
       border-radius: 50%;
       padding: 3px;
-      display: inline-block;
       color: white;
-      text-align: center;
       font-weight: bold;
-      
-    }
+      font-size: 10px;
+      margin-left: 5px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }*/
   </style>
 </head>
 <body>
+  <div class="start-screen active" id="startScreen">
+    <h1>🌍 CO₂ Tracker Tycoon 🌍</h1>
+    <p>Manage your city. Reduce emissions. Balance energy. Play smart!</p>
+    <button onclick="startGame()">▶️ Start Game</button>
+  </div>
   <h1>CO₂ Tracker Tycoon 🌍 - Advanced</h1>
   <p>You are the mayor! Choose green policies to reduce emissions and energy use.</p>
 
-  <div class="dashboard">
-    <div class="policy-buttons">
-      <button onclick="applyPolicy('solar')">☀️ Build Solar Farm <span class="round" data-policy="solar">0</span></button>
-      <button onclick="applyPolicy('bike')">🚴 Promote Biking <span class="round" data-policy="bike">0</span></button>
-      <button onclick="applyPolicy('factory')">🏭 Limit Factory Output <span class="round" data-policy="factory">0</span></button>
-      <button onclick="saveProgress()">💾 Save Progress</button>
-      <button onclick="loadProgress()">📂 Load Progress</button>
+  <div class="main-layout">
+    <div class="left-panel">
+      <div class="policy-buttons">
+        <button onclick="applyPolicy('solar')">☀️ Build Solar Farm <span class="round" data-policy="solar">0</span></button>
+        <button onclick="applyPolicy('bike')">🚴 Promote Biking <span class="round" data-policy="bike">0</span></button>
+        <button onclick="applyPolicy('factory')">🏭 Limit Factory Output <span class="round" data-policy="factory">0</span></button>
+        <button onclick="applyPolicy('highway')">🛣️ Highway</button>
+        <button onclick="applyPolicy('airtravel')">✈️ Air Travel</button>
+    </div>  
+  </div>
+  <div class="right-panel">
+    <div class="chart-box">
+      <canvas id="co2Chart"></canvas>
+      <div class="prograss-bar">
+        <div class="progress-fill progress-co2" id="progressCo2"></div>
+      </div>
     </div>
+  </div>
+
 
     <div class="charts">
       <canvas id="co2Chart"></canvas>
       <canvas id="energyChart"></canvas>
     </div>
-
+    <button onclick="saveProgress()">💾 Save Progress</button>
+    <button onclick="loadProgress()">📂 Load Progress</button>
     <div class="ai-suggestion" id="aiSuggestion">AI Suggestion will appear here...</div>
     <div class="achievements" id="achievements">Achievements: None yet</div>
     <div class="event-log" id="eventLog">Event log will appear here...</div>
