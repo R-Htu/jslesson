@@ -15,6 +15,25 @@
     body{
       text-align: center;
     }
+
+    .floating-leaf{
+      width: 40px;
+      height: 40px;
+      opacity: 0.4;
+      position: absolute;
+      pointer-events: none;
+      animation:falling-leaf 0.2s ease-in-out infinite;
+    }
+
+    @keyframes falling-leaf {
+      0%{
+        transform: translateY(0) rotate(0deg);
+      }
+      100%{
+        transform:translateY(120vh) rotate(360deg);
+      }
+    }
+
     .container{
       max-width: 1200px;
       margin: 20px auto;
@@ -69,8 +88,8 @@
       max-width: 250px;
       height: auto;
       border:4px solid transparent;
-      border-top-color:  rgb(39, 37, 37);
-      border-bottom-color: rgb(39, 37, 37);
+      border-top-color:  #6B8E23;
+      border-bottom-color: #6B8E23;
       border-radius: 14px 0 14px 0;
       background: linear-gradient(
         30deg,
@@ -115,7 +134,7 @@
     <!--  Hope you aren't confused this is a start page :)-->
     <div class="start-screen active" id="startScreen">
       <h1>🌍 CO₂ Tracker Tycoon 🌍</h1>
-      <p style="color: rgb(25, 248, 5);">Manage your city. Reduce emissions. Balance energy. Play smart!</p>
+      <p style="color:#6B8E23; font-weight: 600; font-size: 1.2rem;">Manage your city. Reduce emissions. Balance energy. Play smart!</p>
       <button onclick="startGame()">▶️ Start Game</button>
     </div>
 
@@ -172,7 +191,12 @@
       "#FF6347", // @_@ tomato
       "#CD5C5C", // (ง'̀-'́)ง indian red
       "#8B4513", // 	ಠ_ಠ saddle brown
-      "#D2691E"  // -_- chocolate
+      "#D2691E",  // -_- chocolate
+      "#228B22",
+      "#00FF7F",
+      "#32CD32",
+      "#6B8E23",
+      "#6B8E23"
     ];
 
     const createLeaf = () =>{
@@ -180,8 +204,9 @@
       leaf.setAttribute('class', 'floating-leaf');
       leaf.setAttribute('viewBox','0 0 100 100')
       leaf.style.left = Math.random()*100 + "vw";
+      leaf.style.transform = `rotate(${Math.random()*360}deg) scale(${0.8 + Math.random()*0.4})`;
       leaf.style.animationDuration = 8 + Math.random() * 5 + "s";
-
+      leaf.style.top = "-50px";
       const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
       path.setAttribute('d',leafShapes[Math.floor(Math.random()*leafShapes.length)]);
       path.setAttribute('fill', autumnColors[Math.floor(Math.random()*autumnColors.length)])
@@ -190,6 +215,10 @@
       document.body.appendChild(leaf);
 
       setTimeout(()=>leaf.remove(),15000);
+    }
+    createLeaf();
+    for(let i = 0; i < 10; i++){
+      setTimeout(createLeaf, i * 150);
     }
     setInterval(createLeaf,800);
 
