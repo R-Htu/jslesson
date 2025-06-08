@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Line Chart Example</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <h2>My First Line Chart 📈</h2>
+  <canvas id="myChart"></canvas>
+  <br><br>
+  <canvas id="barChart"></canvas>
+  <br><br>
+  <canvas id="pieChart"></canvas>
+  <br><br>
+  <canvas id="radarChart"></canvas>
+  <br><br>
+  <canvas id="liveChart"></canvas>
+  <script>
+    const ctx = document.getElementById('myChart').getContext('2d');
+
+    const myChart = new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: ['January', 'February', 'March', 'April', 'May'],
+        datasets: [{
+          label: 'Visitors',
+          data: [10, 20, 15, 25, 30],
+          borderColor: 'blue',
+          backgroundColor: 'lightblue',
+          fill: false,
+          tension: 0.3
+        }]
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          legend: {
+            display: true
+          },
+          title: {
+            display: true,
+            text: 'Monthly Visitors Line Chart'
+          }
+        },
+        scales: {
+          x: {
+            ticks: {
+              color: 'blue',
+              font: {
+                size: 14
+              }
+            }
+          },
+          y: {
+            ticks: {
+              color: 'red',
+              font: {
+                size: 14
+              }
+            }
+          }
+        }
+      }
+    });
+
+    new Chart(document.getElementById('barChart'), {
+    type: 'bar',
+    data: {
+      labels: ['Solar', 'Bike', 'Factory'],
+      datasets: [{
+        label: 'Policy Usage',
+        data: [12, 19, 7],
+        backgroundColor: ['#fdd835', '#43a047', '#ef5350']
+      }]
+    },
+    options: {
+      responsive: true,
+      scales: {
+        y: { beginAtZero: true }
+      }
+    }
+  });
+
+   new Chart(document.getElementById('pieChart'), {
+    type: 'pie',
+    data: {
+      labels: ['Solar', 'Bike', 'Factory'],
+      datasets: [{
+        label: 'Policy Distribution',
+        data: [10, 15, 5],
+        backgroundColor: ['#fdd835', '#66bb6a', '#ef5350']
+      }]
+    }
+  });
+   new Chart(document.getElementById('radarChart'), {
+    type: 'radar',
+    data: {
+      labels: ['Environment', 'Health', 'Industry'],
+      datasets: [{
+        label: 'Impact Score',
+        data: [9, 8, 5],
+        backgroundColor: 'rgba(33, 150, 243, 0.2)',
+        borderColor: '#2196f3'
+      }]
+    }
+  });
+   const liveChart = new Chart(document.getElementById('liveChart'), {
+    type: 'line',
+    data: {
+      labels: ['Start'],
+      datasets: [{
+        label: 'CO₂ Level',
+        data: [100],
+        borderColor: '#4caf50',
+        fill: false
+      }]
+    }
+  });
+
+  let count = 1;
+  setInterval(() => {
+    liveChart.data.labels.push("Round " + count);
+    liveChart.data.datasets[0].data.push(100 - count * 5);
+    count++;
+    liveChart.update();
+  }, 1000);
+  </script>
+</body>
+</html>

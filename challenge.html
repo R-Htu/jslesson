@@ -73,14 +73,14 @@
       else if (policy === 'bike') co2Change = -7;
       else if (policy === 'factory') co2Change = -15;
 
-      // Update graph data
+   
       const lastValue = co2Levels[co2Levels.length - 1];
       console.log(lastValue);
       co2Levels.push(lastValue + co2Change);
       labels.push("Round " + round++);
       co2Chart.update();
 
-      // Update count for the button
+   
       policyCounts[policy]++;
       const counterSpan = document.querySelector(`.round[data-policy="${policy}"]`);
       if (counterSpan) {
