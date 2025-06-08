@@ -14,6 +14,7 @@
 
     body{
       text-align: center;
+     background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
     }
 
     .floating-leaf{
@@ -22,7 +23,7 @@
       opacity: 0.4;
       position: absolute;
       pointer-events: none;
-      animation:falling-leaf 0.2s ease-in-out infinite;
+      
     }
 
     @keyframes falling-leaf {
@@ -30,9 +31,42 @@
         transform: translateY(0) rotate(0deg);
       }
       100%{
-        transform:translateY(120vh) rotate(360deg);
+        transform:translate(40vw,120vh) rotate(720deg);
       }
     }
+
+    .static-leaf {
+      position: absolute;
+      width: 60px;
+      height: 60px;
+      opacity: 0.09;
+    }
+
+    #seasonToggleBtn {
+      padding: 12px 20px;
+      max-width: 70px;
+      max-height: 60px;
+      border-radius: 40%;
+      border: none;
+      border-radius: 25px;
+      background: linear-gradient(145deg, #ffb347, #ffcc33);
+      color: white;
+      font-size:7px;
+      font-weight: bold;
+      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+      cursor: pointer;
+      transition: all 0.4s ease;
+      position: absolute;
+      left: 10px;
+    }
+
+    #seasonToggleBtn:hover {
+      background: linear-gradient(145deg, #52b788, #d39b0d);
+      transform: scale(1.3);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+     
+    }
+
 
     .container{
       max-width: 1200px;
@@ -130,11 +164,15 @@
   </style>
 </head>
 <body>
+  <button id="seasonToggleBtn" onclick="toggleSeason()">🍁 Autumn Mode</button>
+
+
   <div class="container">
     <!--  Hope you aren't confused this is a start page :)-->
     <div class="start-screen active" id="startScreen">
       <h1>🌍 CO₂ Tracker Tycoon 🌍</h1>
-      <p style="color:#6B8E23; font-weight: 600; font-size: 1.2rem;">Manage your city. Reduce emissions. Balance energy. Play smart!</p>
+      <p style="color:#6B8E23; font-weight: 600; font-size: 1.2rem;">Manage your city. Reduce emissions.
+         Balance energy. Play smart!</p>
       <button onclick="startGame()">▶️ Start Game</button>
     </div>
 
@@ -173,6 +211,30 @@
 
   <script>
 
+    const autumnColors = [
+      "#FF7F50", "#FFA500", "#FFD700", "#FF6347", "#CD5C5C", "#8B4513", "#D2691E"
+    ];
+
+    const springColors = [
+      "#228B22", "#00FF7F", "#32CD32", "#6B8E23", "#7CFC00", "#66CDAA"
+    ];
+
+    let currentSeason = "autumn"; 
+
+    function toggleSeason() {
+      currentSeason = currentSeason === "autumn" ? "spring" : "autumn";
+
+      const btn = document.getElementById("seasonToggleBtn");
+      if (currentSeason === "spring") {
+        btn.innerHTML = "🌸 Spring Mode";
+        btn.style.background = "linear-gradient(145deg, #a3f7bf, #60d394)";
+      } else {
+        btn.innerHTML = "🍁 Autumn Mode";
+        btn.style.background = "linear-gradient(145deg, #ffb347, #ffcc33)";
+      }
+    }
+
+
     const startGame=()=>{
       document.querySelector('#startScreen').style.display = "none";
       document.querySelector('#gameScreen').style.display = "block";
@@ -184,32 +246,22 @@
       "M50 0 C70 10, 80 90, 50 100 C20 90, 30 10, 50 0 Z"
     ];
 
-    const autumnColors = [
-      "#FF7F50", // ^_^ coral
-      "#FFA500", // 	(ಥ﹏ಥ) orange
-      "#FFD700", // @_@ gold
-      "#FF6347", // @_@ tomato
-      "#CD5C5C", // (ง'̀-'́)ง indian red
-      "#8B4513", // 	ಠ_ಠ saddle brown
-      "#D2691E",  // -_- chocolate
-      "#228B22",
-      "#00FF7F",
-      "#32CD32",
-      "#6B8E23",
-      "#6B8E23"
-    ];
-
     const createLeaf = () =>{
       const leaf = document.createElementNS("http://www.w3.org/2000/svg", "svg");
       leaf.setAttribute('class', 'floating-leaf');
-      leaf.setAttribute('viewBox','0 0 100 100')
-      leaf.style.left = Math.random()*100 + "vw";
+      leaf.setAttribute('viewBox','0 0 100 100');
+
+      const startLeft = Math.random()*100;
+      const wind = Math.random() * 40 - 20;
+      leaf.style.left = startLeft + "vw";
+      leaf.style.top = "-25px";
       leaf.style.transform = `rotate(${Math.random()*360}deg) scale(${0.8 + Math.random()*0.4})`;
-      leaf.style.animationDuration = 8 + Math.random() * 5 + "s";
-      leaf.style.top = "-50px";
+      leaf.style.animation = `falling-leaf ${8 + Math.random() * 5}s ease-in-out forwards`;
+
       const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
+      const colors = currentSeason === "spring" ? springColors : autumnColors;
       path.setAttribute('d',leafShapes[Math.floor(Math.random()*leafShapes.length)]);
-      path.setAttribute('fill', autumnColors[Math.floor(Math.random()*autumnColors.length)])
+      path.setAttribute('fill', colors[Math.floor(Math.random()*colors.length)])
 
       leaf.appendChild(path);
       document.body.appendChild(leaf);
@@ -217,11 +269,32 @@
       setTimeout(()=>leaf.remove(),15000);
     }
     createLeaf();
-    for(let i = 0; i < 10; i++){
-      setTimeout(createLeaf, i * 150);
+    for(let i = 0; i < 100; i++){
+      setTimeout(createLeaf, i * 50);
     }
     setInterval(createLeaf,800);
 
+    function generateStaticLeaves(count = 30) {
+
+      for (let i = 0; i < count; i++) {
+        const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+        const colors = currentSeason === "spring" ? springColors : autumnColors;
+        svg.setAttribute("class", "static-leaf");
+        svg.setAttribute("viewBox", "0 0 100 100");
+        svg.style.top = Math.random() * 100 + "vh";
+        svg.style.left = Math.random() * 100 + "vw";
+        svg.style.transform = `rotate(${Math.random() * 360}deg) scale(${0.8 + Math.random() * 0.6})`;
+
+        const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
+        path.setAttribute("d", leafShapes[Math.floor(Math.random() * leafShapes.length)]);
+        path.setAttribute("fill", colors[Math.floor(Math.random() * colors.length)]);
+
+        svg.appendChild(path);
+        document.body.appendChild(svg);
+      }
+  }
+
+  generateStaticLeaves(40); 
 
     let co2Levels = [100];
     let labels = ["Start"];
