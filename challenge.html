@@ -11,19 +11,72 @@
       padding: 0;
       box-sizing: border-box;
     }
+
     body{
       text-align: center;
     }
+    .container{
+      max-width: 1200px;
+      margin: 20px auto;
+    }
+
+    .start-screen.active{
+      display: block;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      gap: 20px;
+    }
+    h1{
+      font-size: 3.5rem;
+      text-align: center;
+      margin-bottom: 2rem;
+      background: linear-gradient(
+      to right,
+      red,
+      orange,
+      yellow,
+      green,
+      blue,
+      indigo,
+      violet
+      );
+      background-clip: text;
+      color: transparent;
+      background-size: 400%;
+      animation: flow 4s ease-in-out infinite;
+      text-shadow: 0 0 15px rgba(255, 255, 255, 0.3),
+      0 0 25px rgba(255, 255, 255, 0.2);
+      z-index: 1;
+      position: relative;
+    }
+    @keyframes flow {
+      0% {
+        background-position: 0% 50%;
+      }
+      100% {
+        background-position: 100% 50%;
+      }
+	}
+
+    .game-screen{
+      display: none;
+    }
+
     button{
-      border:2px solid transparent;
+      max-width: 250px;
+      height: auto;
+      border:4px solid transparent;
       border-top-color:  rgb(39, 37, 37);
       border-bottom-color: rgb(39, 37, 37);
       border-radius: 14px 0 14px 0;
       background: linear-gradient(
         30deg,
-        rgba(254, 152, 0, 0.3),
-        rgba(3, 253, 249, 0.2),
-        rgba(246, 0, 0, 0.3)
+        rgba(182, 0, 254, 0.3),
+        rgba(26, 1, 251, 0.2),
+        rgba(7, 252, 3, 0.3)
       );
       padding: 7px 14px;
       cursor: pointer;
@@ -58,46 +111,89 @@
   </style>
 </head>
 <body>
-  <div class="start-screen active" id="startScreen">
-    <h1>🌍 CO₂ Tracker Tycoon 🌍</h1>
-    <p>Manage your city. Reduce emissions. Balance energy. Play smart!</p>
-    <button onclick="startGame()">▶️ Start Game</button>
-  </div>
-  <h1>CO₂ Tracker Tycoon 🌍 - Advanced</h1>
-  <p>You are the mayor! Choose green policies to reduce emissions and energy use.</p>
+  <div class="container">
+    <!--  Hope you aren't confused this is a start page :)-->
+    <div class="start-screen active" id="startScreen">
+      <h1>🌍 CO₂ Tracker Tycoon 🌍</h1>
+      <p style="color: rgb(25, 248, 5);">Manage your city. Reduce emissions. Balance energy. Play smart!</p>
+      <button onclick="startGame()">▶️ Start Game</button>
+    </div>
 
-  <div class="main-layout">
-    <div class="left-panel">
-      <div class="policy-buttons">
-        <button onclick="applyPolicy('solar')">☀️ Build Solar Farm <span class="round" data-policy="solar">0</span></button>
-        <button onclick="applyPolicy('bike')">🚴 Promote Biking <span class="round" data-policy="bike">0</span></button>
-        <button onclick="applyPolicy('factory')">🏭 Limit Factory Output <span class="round" data-policy="factory">0</span></button>
-        <button onclick="applyPolicy('highway')">🛣️ Highway</button>
-        <button onclick="applyPolicy('airtravel')">✈️ Air Travel</button>
-    </div>  
-  </div>
-  <div class="right-panel">
-    <div class="chart-box">
-      <canvas id="co2Chart"></canvas>
-      <div class="prograss-bar">
-        <div class="progress-fill progress-co2" id="progressCo2"></div>
+    <!--  Hope you aren't confused this is a gave page :)-->
+    <div class="game-screen" id="gameScreen">
+      <h1>CO₂ Tracker Tycoon 🌍 - Advanced</h1>
+      <p>You are the mayor! Choose green policies to reduce emissions and energy use.</p>
+
+      <div class="main-layout">
+        <div class="left-panel">
+          <div class="policy-buttons">
+            <button onclick="applyPolicy('solar')">☀️ Build Solar Farm <span class="round" data-policy="solar">0</span></button>
+            <button onclick="applyPolicy('bike')">🚴 Promote Biking <span class="round" data-policy="bike">0</span></button>
+            <button onclick="applyPolicy('factory')">🏭 Limit Factory Output <span class="round" data-policy="factory">0</span></button>
+            <button onclick="applyPolicy('highway')">🛣️ Highway</button>
+            <button onclick="applyPolicy('airtravel')">✈️ Air Travel</button>
+        </div>  
+      </div>
+      <div class="right-panel">
+        <div class="chart-box">
+          <canvas id="co2Chart"></canvas>
+          <div class="prograss-bar">
+            <div class="progress-fill progress-co2" id="progressCo2"></div>
+          </div>
+        </div>
       </div>
     </div>
-  </div>
-
-
-    <div class="charts">
-      <canvas id="co2Chart"></canvas>
-      <canvas id="energyChart"></canvas>
+        <button onclick="saveProgress()">💾 Save Progress</button>
+        <button onclick="loadProgress()">📂 Load Progress</button>
+        <div class="ai-suggestion" id="aiSuggestion">AI Suggestion will appear here...</div>
+        <div class="achievements" id="achievements">Achievements: None yet</div>
+        <div class="event-log" id="eventLog">Event log will appear here...</div>
     </div>
-    <button onclick="saveProgress()">💾 Save Progress</button>
-    <button onclick="loadProgress()">📂 Load Progress</button>
-    <div class="ai-suggestion" id="aiSuggestion">AI Suggestion will appear here...</div>
-    <div class="achievements" id="achievements">Achievements: None yet</div>
-    <div class="event-log" id="eventLog">Event log will appear here...</div>
   </div>
+  
 
   <script>
+
+    const startGame=()=>{
+      document.querySelector('#startScreen').style.display = "none";
+      document.querySelector('#gameScreen').style.display = "block";
+    }
+
+    const leafShapes = [
+      "M50 0 C80 20, 100 50, 50 100 C0 50, 20 20, 50 0 Z",
+      "M50 0 Q75 25 50 100 Q25 25 50 0 Z",
+      "M50 0 C70 10, 80 90, 50 100 C20 90, 30 10, 50 0 Z"
+    ];
+
+    const autumnColors = [
+      "#FF7F50", // ^_^ coral
+      "#FFA500", // 	(ಥ﹏ಥ) orange
+      "#FFD700", // @_@ gold
+      "#FF6347", // @_@ tomato
+      "#CD5C5C", // (ง'̀-'́)ง indian red
+      "#8B4513", // 	ಠ_ಠ saddle brown
+      "#D2691E"  // -_- chocolate
+    ];
+
+    const createLeaf = () =>{
+      const leaf = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+      leaf.setAttribute('class', 'floating-leaf');
+      leaf.setAttribute('viewBox','0 0 100 100')
+      leaf.style.left = Math.random()*100 + "vw";
+      leaf.style.animationDuration = 8 + Math.random() * 5 + "s";
+
+      const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
+      path.setAttribute('d',leafShapes[Math.floor(Math.random()*leafShapes.length)]);
+      path.setAttribute('fill', autumnColors[Math.floor(Math.random()*autumnColors.length)])
+
+      leaf.appendChild(path);
+      document.body.appendChild(leaf);
+
+      setTimeout(()=>leaf.remove(),15000);
+    }
+    setInterval(createLeaf,800);
+
+
     let co2Levels = [100];
     let labels = ["Start"];
     let round = 1;
