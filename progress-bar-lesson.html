@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Progress Bar Example</title>
+  <style>
+    .progress-bar {
+      width: 100%;
+      max-width: 400px;
+      height: 25px;
+      background-color: #ddd;
+      border-radius: 12px;
+      overflow: hidden;
+      margin: 20px auto;
+      box-shadow: 0 0 4px rgba(0, 0, 0, 0.3);
+    }
+
+    .progress-fill {
+      height: 100%;
+      width: 0%;
+      background-color: #4caf50;
+      border-radius: 12px 0 0 12px;
+      transition: width 0.5s ease-in-out;
+    }
+
+    .progress-fill2 {
+      height: 100%;
+      width: 0%;
+      background-color: #afaa0f;
+      border-radius: 12px 0 0 12px;
+      transition: width 0.5s ease-in-out;
+    }
+
+    button {
+      display: block;
+      margin: 10px auto;
+      padding: 10px 20px;
+      font-size: 16px;
+    }
+  </style>
+</head>
+<body>
+
+  <h2 style="text-align:center;">Simple Progress Bar</h2>
+
+  <div class="progress-bar">
+    <div class="progress-fill" id="myProgress"></div>
+    <div class="progress-fill2" id="progressFill"></div>
+  </div>
+<div class="progress-bar">
+    <div class="progress-fill2" id="progressFill2"></div>
+  </div>
+
+  <button onclick="increaseProgress()">Increase Progress</button>
+  <button onclick="reduceCO2()">Apply Green Policy</button>
+  <script>
+    let progress = 0;
+    const progressBar = document.getElementById('myProgress');
+
+    function increaseProgress() {
+      if (progress < 100) {
+        progress += 10;
+        progressBar.style.width = progress + "%";
+      }
+    }
+
+    let co2 = 200;
+    const max = 200;
+
+  function reduceCO2() {
+    if (co2 > 0) {
+      co2 -= 10;
+
+      const progress = ((max - co2) / max) * 100;
+      document.getElementById("progressFill2").style.width = progress + "%";
+
+      console.log(`CO₂ is now ${co2}, progress is ${progress}%`);
+    }
+  }
+  </script>
+</body>
+</html>
