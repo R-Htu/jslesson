@@ -4,6 +4,32 @@
   <title>JS-Only Plastics</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <style>
+    *{
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    .container {
+      max-width: 1500px;
+      margin: 0 auto;
+    }
+    #plastics {
+      background-image: url(images/fileld.jpg);
+      background-position:top;
+      height: 500px;
+      background-size: cover;
+      background-position: center;
+      position: relative;
+      
+    }
+    .fa-trash-can {
+      color:green;
+      font-size: 4rem;
+    }
+
+    .plastic-position {
+      position: absolute;
+    }
     .one   { color: brown; }
     .two   { color: red; }
     .three { color: blue; }
@@ -11,11 +37,50 @@
     .five  { color: pink; }
     .six   { color: gray; }
     .seven { color: violet; }
+
+    .bin-collection img {
+      width: 60px;
+    }
+    #organic,
+    #recycle,
+    #hazardous,
+    #general {
+      position: absolute;
+      top: 50%;
+      width: 60px;
+    }
+    #organic {
+      left: 20%;
+    }
+
+    #recycle {
+      left: 30%;
+    }
+
+    #hazardous {
+      left: 40%;
+    }
+
+    #general {
+      left: 50%;
+    }
+
   </style>
 </head>
 <body>
 
-<div id="plastics"></div>
+  <div class="container">
+    <div id="plastics">
+      <div class="bin-collection">
+        <div id="organic"><img src="images/organic.png" alt=""></div>
+        <div id="recycle"><img src="images/recycle.png" alt=""></div>
+        <div id="hazardous"><img src="images/hazardous.png" alt=""></div>
+        <div id="general"><img src="images/general.png" alt=""></div>
+      </div>
+    </div>
+  </div>
+
+
 
 <script>
   const totalPlastics = ["🥤", "🧴", "🧃", "🧋"];
@@ -29,7 +94,27 @@
     totalPlastics.push(i)
   })
 
-
+  totalPlastics.forEach(val => {
+    const top    = `${Math.random()*20 + 70 }%`;
+    const left    = `${Math.random()*90}%`;
+    const fontSize = `${Math.random()*30 +20}px`;
+    if(typeof(val) === "string") {
+      const span = document.createElement('span');
+      span.style.display = 'block';
+      span.className = "plastic-position";
+      span.style.top    = top;
+      span.style.left    = left;
+      span.style.fontSize = fontSize;
+      span.textContent = val;
+      plasticsDiv.appendChild(span);
+    }else {
+      val.classList.add('plastic-position');
+      val.style.top = top;
+      val.style.left = left;
+      val.style.fontSize = fontSize;
+      plasticsDiv.appendChild(val);
+    }
+  })
 
   console.log(totalPlastics); 
 </script>
