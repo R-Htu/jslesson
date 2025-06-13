@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .output{
+            color: rgb(105, 11, 236);
+        }
+        .success {
+            color: green;
+        }
+        .error {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <h1>🌦️ Fake Weather App</h1>
+    <input type="text" id="cityInput" placeholder="Enter City Name">
+    <button onclick="showWeather()">Get Weather</button>
+    <br><br>
+    <div id="output"></div>
+
+    <script>
+        function getWeather(city){
+            return new Promise((resolve,reject)=>{
+                if(!city) {
+                    reject('❌ City not provided!')
+                }
+                const weatherTypes = ["sunny ☀️","cloudy ☁️","stromy", "rainy" ]
+                //weatherTypes[Math.random()]
+                const randomWeather = Math.floor(Math.random()*weatherTypes.length);
+                setTimeout(()=>{
+                    resolve(`The weather in ${city} is ${randomWeather} `)
+                },2000)
+
+            })
+        }
+
+    
+
+        function showWeather(){
+            const city= document.getElementById('cityInput').value.trim();
+            const output = document.getElementById('output');
+            //output.textContent = city;
+            output.textContent = "Checking weather ..."
+            //output.className = "";
+            getWeather(city).then(val=>{
+                output.textContent = val;
+                output.className = "success";
+            })
+            .catch(err => {
+                output.textContent = err;
+                output.className ="error";
+            })
+            document.getElementById('cityInput').value = "";
+        }
+        const weatherTypes = ["sunny ☀️","cloudy ☁️","stromy", "rainy" ];
+        console.log(weatherTypes[3])
+       // weatherTypes[Math.random()*weatherTypes.length]
+       console.log(weatherTypes.length)
+       console.log(Math.random()*weatherTypes.length)
+      console.log( Math.floor(445.74384))
+      const index = Math.floor(Math.random()*weatherTypes.length);
+      console.log(index);
+      console.log(weatherTypes[index]);
+        
+    </script>
+</body>
+</html>

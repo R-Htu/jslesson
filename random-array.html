@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <input type="text" id="input">
+    <button>Add</button>
+    <br><br>
+    <div id="arrayInput" class="array-input"></div>
+    <div id="message"></div>
+    <br><br>
+    <div id="messageTrim"></div>
+
+    <script>
+        //split
+        const sentence = " How are you doing? "
+        const sentenceTrim = sentence.trim();
+        console.log(sentenceTrim.split(' '));
+
+        // without trim
+        console.log(sentence.split(" ")); 
+        console.log(sentence.split(" ")[1]);
+
+        document.getElementById('arrayInput').textContent = sentence.split(" ");
+
+  // array = [12,3,"jfdjfd"]
+    // trim()က အရှေ့ဆုံးက space နဲ့ အနောက်ဆုံးက space ကို သွားဖျက်ပေးတာ 
+    // split(", ")ဆိုတာက သူရဲ့ ကွင်းစ ကွင်းပိတ်ထဲမှာရှိ အရာကို မူတည်ပြီး string က တန်ဖိုးကို array အနေနဲ့ သွားပြောင်းပေးတာ 
+    const message = " Where will you be done with your homework? "
+    console.log(message.split(" "));
+    document.getElementById('message').textContent = message.split(" ");
+
+    const messageTrim = message.trim();
+    console.log("Message Trim: " + messageTrim)
+
+    document.getElementById('messageTrim').textContent = messageTrim.split(" ");
+    console.log(" Nine Nine do you understand? ".trim().split(" "));
+
+    //Math.random() ဆိုတာ 0 နဲ့ ၁ ရဲ့ ကြားက တန်ဖိုး ဒသမကိန်း 
+    const product2 = Math.random()*2
+    console.log(product2)
+    console.log(product2+200);
+                      
+    </script>
+</body>
+</html>

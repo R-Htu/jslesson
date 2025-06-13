@@ -74,9 +74,12 @@
         padding: 20px;
     }
 
-    .left-panel, .right-panel, .chart-box {
+    .left-panel, .right-panel  {
         flex: 1 1 300px;
         max-width: 600px;
+    }
+    .chart-box{
+        width: 100%;
     }
 
     button {
@@ -129,8 +132,6 @@
         box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
     }
 
-
-
     .policy-buttons {
         display: flex;
         flex-wrap: wrap;
@@ -159,6 +160,7 @@
         gap: 20px;
         padding: 20px;
         margin-top: 20px;
+
     }
 
     .message {
@@ -178,6 +180,7 @@
             0 4px 8px rgba(0, 0, 0, 0.15),
             0 8px 20px rgba(0, 0, 0, 0.1),
             inset 0 -4px 18px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
         transition: transform 0.3s ease;
     }
 
@@ -189,7 +192,24 @@
             0 12px 30px rgba(0, 0, 0, 0.15),
             inset 0 -1px 2px rgba(255, 255, 255, 0.2);
     }
+    .ai-suggestion,
+    .event-log,
+    .achievements {
+        position: relative;
+    }
 
+
+    .leaf-background {
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        z-index: 0;
+    }
+
+    .message > *:not(.leaf-background) {
+        position: relative;
+        z-index: 1;
+    }
 
     .bottom-charts {
         display: flex;
@@ -198,11 +218,6 @@
         gap: 5rem;
         margin-top: 20px;
     }
-
-    .chart-box {
-        width: 100%;
-    }
-
 
     .progress-bar {
         width: 80%;
@@ -302,6 +317,20 @@
     }
 
     @media (max-width: 480px) {
+        .chart-box {
+            width: 100%;
+            max-width: 600px;
+            overflow: hidden;
+        }
+
+        canvas#co2Chart {
+            width: 100% !important;
+            height: auto !important;
+            display: block;
+        }
+        .main-layout {
+            gap:0;
+        }
         h1 {
             font-size: 1.8rem;
         }
@@ -326,8 +355,6 @@
   </style>
 </head>
 <body>
- 
-   
   
   <!--  Hope you aren't confused this is a start page :)-->
 	<div class="start-screen active" id="startScreen">
@@ -339,11 +366,10 @@
 	  <button onclick="startGame()" id="startBtn">▶️ Start Game</button>
 	</div>
 
- 
 	<!--  Hope you aren't confused this is a gave page :)-->
 	<div class="game-screen" id="gameScreen">
-	  <h1>CO₂ Tracker Tycoon 🌍 - Advanced</h1>
-
+	  <h1>CO₂ Tracker Tycoon 🌍</h1>
+      <p style="margin-bottom: 1rem; color: rgb(84, 159, 57);">Manage CO₂, Energy & Footprint! Choose policies wisely.</p>
 	  <div class="main-layout">
 		 <div class="right-panel">
             <div class="chart-box">
@@ -358,8 +384,8 @@
                 <button onclick="applyPolicy('solar')">☀️ Build Solar Farm <span class="round" data-policy="solar">0</span></button>
                 <button onclick="applyPolicy('bike')">🚴 Promote Biking <span class="round" data-policy="bike">0</span></button>
                 <button onclick="applyPolicy('factory')">🏭 Limit Factory Output <span class="round" data-policy="factory">0</span></button>
-                <button onclick="applyPolicy('highway')">🛣️ Highway</button>
-                <button onclick="applyPolicy('airtravel')">✈️ Air Travel</button>
+                <button onclick="applyPolicy('highway')">🛣️ Highway<span class="round" data-policy="highway">0</span></button>
+                <button onclick="applyPolicy('airtravel')">✈️ Air Travel<span class="round" data-policy="airtravel">0</span></button>
 		    </div> 
 	       </div>
 	    </div>
@@ -386,19 +412,30 @@
                 <text x="50" y="55" font-size="7" text-anchor="middle" fill="white" id="ecoBadge">Eco Badge Earned 0</text>
             </svg>
         </div>
-
                 
         <div class="save-load-buttons">
             <button onclick="saveProgress()">💾 Save Progress</button>
             <button onclick="loadProgress()">📂 Load Progress</button>
         </div>
 
+        <div class="message-row">
+            <div class="ai-suggestion message">
+                <div class="leaf-background"></div>
+                <div id="aiSuggestion">AI Suggestion will appear here...<br>🫧</div>
+            </div>
 
-		<div class="message-row">
-            <div class="ai-suggestion message" id="aiSuggestion">AI Suggestion will appear here...</div>
-            <div class="achievements message" id="achievements">Achievements: None yet</div>
-            <div class="event-log message" id="eventLog">Event log will appear here...</div>
+            <div class="achievements message">
+                <div class="leaf-background"></div>
+                <div id="achievements">Achievements:<br>🎉</div>
+            </div>
+
+            <div class="event-log message">
+                <div class="leaf-background"></div>
+                <div id="eventLog">Event log will appear here...<br>🍀</div>
+            </div>
         </div>
+
+
 
        
 	</div>
@@ -433,8 +470,23 @@
     const policyCounts = {
       solar: 0,
       bike: 0,
-      factory: 0
+      factory: 0,
+      highway:0,
+      airtravel:0
     };
+
+    const chartOptions = {
+      animation: {
+        duration: 1000
+      },
+      scales: {
+        y: {
+            suggestedMin: 0,
+            suggestedMax: 200
+        }
+      }
+    };
+
 
     const co2Chart = new Chart(document.querySelector('#co2Chart'), {
       type: "line",
@@ -446,7 +498,8 @@
         data: co2Levels,
         fill: false
       }]
-      }
+      },
+      options: chartOptions
     });
 
     const energyChart = new Chart(document.getElementById("energyChart"), {
@@ -460,6 +513,7 @@
                 fill: false
             }]
         },
+        options: chartOptions
     });
 
     const footprintChart = new Chart(document.getElementById("footprintChart"), {
@@ -473,6 +527,7 @@
                 fill: false
             }]
             },
+            options: chartOptions
         });
 
     const applyPolicy = policy => {
@@ -529,6 +584,7 @@
     updateProgressBars();
     simulateAISuggestion(policy);
     triggerRandomEvent();
+    checkAchievements();
 
     }
 
@@ -556,7 +612,7 @@
         setTimeout(() => {
             const options = adviceOptions[policy];
             const randomAdvice = options[Math.floor(Math.random() * options.length)];
-            aiSuggestionBox.innerText = "🤖 AI says: " + randomAdvice;
+            aiSuggestionBox.textContent = "🤖 AI says: " + randomAdvice;
             //aiSuggestionBox.style.opacity = 1;
         }, 600);
     }
@@ -587,22 +643,84 @@
 
         updateProgressBars();
 
-        setTimeout(() => {
-            eventLogBox.style.opacity = 1;
-        }, 500);
-        } else {
-          eventLogBox.innerText = "";
+     }
+    }
+
+    function checkAchievements() {
+        const currentCo2 = co2Levels[co2Levels.length - 1];
+        const initialEnergy = energyUse[0];
+        const currentEnergy = energyUse[energyUse.length - 1];
+        const energySaved = initialEnergy - currentEnergy;
+
+        if (currentCo2 < 30 && energySaved > 50) {
+            showAchievement("🌍 Eco Hero");
+        }
+
+        if (ecoBadgeCount >= 5) {
+            showAchievement("🎖️ Master Policy Maker");
         }
     }
 
+    function showAchievement(title) {
+        if (!achievements.includes(title)) {
+            achievements.push(title);
+            const badge = document.createElement('div');
+            badge.classList.add('badge');
+            badge.textContent = `🏆 ${title}`;
+            achievementsBox.appendChild(badge);
+        }
 
+    }
     updateProgressBars();
+
     function saveProgress() {
-      alert("Save not implemented yet.");
+        const gameData = {
+        co2Levels,
+        energyUse,
+        carbonFootprint,
+        labels,
+        round,
+        ecoBadgeCount,
+        achievements
+    };
+
+        localStorage.setItem("co2TrackerGameData", JSON.stringify(gameData));
     }
 
     function loadProgress() {
-      alert("Load not implemented yet.");
+
+        achievementsBox.querySelectorAll(".badge").forEach(el => el.remove());
+
+        const savedData = localStorage.getItem("co2TrackerGameData");
+        if (savedData) {
+            const gameData = JSON.parse(savedData);
+            co2Levels = gameData.co2Levels;
+            energyUse = gameData.energyUse;
+            carbonFootprint = gameData.carbonFootprint;
+            labels = gameData.labels;
+            round = gameData.round;
+            ecoBadgeCount = gameData.ecoBadgeCount;
+            achievements = gameData.achievements;
+
+            co2Chart.data.labels = labels;
+            co2Chart.data.datasets[0].data = co2Levels;
+            energyChart.data.labels = labels;
+            energyChart.data.datasets[0].data = energyUse;
+            footprintChart.data.labels = labels;
+            footprintChart.data.datasets[0].data = carbonFootprint;
+
+            co2Chart.update();
+            energyChart.update();
+            footprintChart.update();
+
+            achievementsBox.innerHTML = "";
+            achievements.forEach(showAchievement);
+            ecoBadgeBox.innerText = `🌿 Eco Badges Earned: ${ecoBadgeCount}`;
+
+            updateProgressBars();
+        } else {
+            alert("No saved game found. Starting fresh.");
+        }
     }
     const leafContainer = document.querySelector('#leafContainer');    
     const startScreen = document.querySelector('#startScreen');
@@ -627,13 +745,13 @@
 
     
         svg.style.left = `${Math.random() * 100}vw`;
-        svg.style.top = `${Math.random() * (isFloating ? -25 : 100)}vh`;
+        svg.style.top = `${Math.random() * (isFloating ? -10 : 100)}vh`;
         svg.style.width = `${Math.random() * (isFloating ? 10 : 230) + 30}px`;
         svg.style.height = `${Math.random() * (isFloating ? 10 : 230) + 30}px`;
         svg.style.transform = `rotate(${Math.random() * 360}deg) scale(${0.8 + Math.random() * (isFloating ? 0.4 : 0.6)})`;
 
         if (isFloating) {
-        svg.style.animation = `falling-leaf ${8 + Math.random() * 5}s ease-in-out forwards`;
+            svg.style.animation = `falling-leaf ${8 + Math.random() * 5}s ease-in-out forwards`;
         }
 
         const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
@@ -652,8 +770,8 @@
 
     const generateStaticLeaves = (count = 30) => {
         for (let i = 0; i < count; i++) {
-        const staticLeaf = createLeafSVG(false);
-        leafContainer.appendChild(staticLeaf);
+            const staticLeaf = createLeafSVG(false);
+            leafContainer.appendChild(staticLeaf);
         }
     };
 
@@ -662,11 +780,11 @@
         const btn = document.getElementById("seasonToggleBtn");
 
         if (currentSeason === "spring") {
-        btn.innerHTML = "🌸 Spring Mode";
-        btn.style.background = "linear-gradient(145deg, #a3f7bf, #60d394)";
+            btn.innerHTML = "🌸 Spring Mode";
+            btn.style.background = "linear-gradient(145deg, #a3f7bf, #60d394)";
         } else {
-        btn.innerHTML = "🍁 Autumn Mode";
-        btn.style.background = "linear-gradient(145deg, #ffb347, #ffcc33)";
+            btn.innerHTML = "🍁 Autumn Mode";
+            btn.style.background = "linear-gradient(145deg, #ffb347, #ffcc33)";
         }
 
        for (let i = 0; i < 100; i++) setTimeout(createLeaf, i * 50);
@@ -678,8 +796,36 @@
 
     generateStaticLeaves(40);
     createLeaf();
+
     for (let i = 0; i < 100; i++) setTimeout(createLeaf, i * 50);
     let leafInterval = setInterval(createLeaf, 800);
+    
+    const generateLeavesForBox = (boxElement, count = 8) => {
+
+        const bgContainer = boxElement.querySelector(".message");
+        if (!bgContainer) return; // safety
+
+        bgContainer.innerHTML = "";
+
+        for (let i = 0; i < count; i++) {
+            const leaf = createLeafSVG(false);
+            leaf.style.position = "absolute";
+            leaf.style.left = `${Math.random() * 100}%`;
+            leaf.style.top = `${Math.random() * 100}%`;
+            leaf.style.zIndex = "0";
+            bgContainer.appendChild(leaf);
+        }
+    };
+
+    window.addEventListener("DOMContentLoaded", () => {
+        generateLeavesForBox(aiSuggestionBox);
+        generateLeavesForBox(eventLogBox);
+        generateLeavesForBox(achievementsBox);
+    });
+
+
+
+
     const startGame = () => {
         startScreen.style.display = "none";
         document.querySelector('#gameScreen').style.display = "block";

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Promise Visual Demo</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f4f4;
+      text-align: center;
+      padding: 2rem;
+    }
+    h1 {
+      color: #333;
+    }
+    .box {
+      width: 250px;
+      margin: 2rem auto;
+      padding: 1rem;
+      border: 2px dashed #ccc;
+      border-radius: 10px;
+      background: white;
+      box-shadow: 0 0 15px rgba(0,0,0,0.1);
+    }
+    .status {
+      font-size: 1.2rem;
+      margin-top: 1rem;
+      font-weight: bold;
+    }
+    .pending { color: orange; }
+    .resolved { color: green; }
+    .rejected { color: red; }
+    button {
+      padding: 10px 20px;
+      font-size: 1rem;
+      margin-top: 1rem;
+      cursor: pointer;
+      border-radius: 6px;
+      background: dodgerblue;
+      color: white;
+      border: none;
+    }
+    button:hover {
+      background: #006bb3;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>🎬 Promise Demo Visualizer</h1>
+  <div class="box">
+    <p>Click to run an async task:</p>
+    <button onclick="runPromise()">Start Task</button>
+    <div id="result" class="status"></div>
+  </div>
+    <script>
+          function runPromise() {
+      const result = document.getElementById('result');
+      result.textContent = '⏳ Pending...';
+      result.className = 'status pending';
+
+      const myPromise = new Promise((resolve, reject) => {
+        const delay = Math.random() * 3000 + 1000; // Random delay between 1-4s
+        console.log("Delay" + delay);
+        setTimeout(() => {
+          if (Math.random() > 0.5) {
+            resolve("✅ Resolved successfully!");
+          } else {
+            reject("❌ Rejected with an error.");
+          }
+        }, delay);
+      });
+
+      myPromise
+        .then(message => {
+          result.textContent = message;
+          result.className = 'status resolved';
+        })
+        .catch(error => {
+          result.textContent = error;
+          result.className = 'status rejected';
+        });
+    }
+            const delay = Math.random() * 3000 + 1000; // Random delay between 1-4s
+        console.log("Delay" + delay);
+        console.log(Math.random()  + 1);
+ 
+    </script>
+</body>
+</html>

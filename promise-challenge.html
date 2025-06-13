@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Promise Challenge: Fake Weather</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      padding: 2rem;
+      text-align: center;
+    }
+
+    input, button {
+      padding: 10px;
+      font-size: 1rem;
+      margin: 10px;
+    }
+
+    #output {
+      font-size: 1.2rem;
+      margin-top: 20px;
+      font-weight: bold;
+    }
+
+    .box {
+      border: 2px solid #888;
+      padding: 15px;
+      display: inline-block;
+      min-width: 250px;
+      background-color: #f9f9f9;
+      border-radius: 10px;
+    }
+
+    .error {
+      color: red;
+    }
+
+    .success {
+      color: green;
+    }
+
+    .loading {
+      color: orange;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>🌦️ Fake Weather App</h1>
+  <input type="text" id="cityInput" placeholder="Enter city name">
+  <button onclick="showWeather()">Get Weather</button>
+  <div id="output" class="box"></div>
+
+  <script>
+    function getWeather(city) {
+      return new Promise((resolve, reject) => {
+        if (!city) {
+          reject("❌ City not provided!");
+          return;
+        }
+
+        const weatherTypes = ["sunny ☀️", "rainy 🌧️", "cloudy ☁️", "stormy 🌩️"];
+        const randomWeather = weatherTypes[Math.floor(Math.random() * weatherTypes.length)];
+
+        setTimeout(() => {
+          resolve(`The weather in ${city} is ${randomWeather}`);
+        }, 2000);
+      });
+    }
+
+    function showWeather() {
+      const city = document.getElementById("cityInput").value.trim();
+      const output = document.getElementById("output");
+
+      // Remove only status classes, keep "box"
+      output.classList.remove("success", "error", "loading");
+      output.classList.add("loading");
+      output.textContent = "⏳ Checking weather...";
+
+      getWeather(city)
+        .then(message => {
+          output.classList.remove("loading");
+          output.classList.add("success");
+          output.textContent = message;
+        })
+        .catch(error => {
+          output.classList.remove("loading");
+          output.classList.add("error");
+          output.textContent = error;
+        });
+    }
+  </script>
+
+</body>
+</html>
