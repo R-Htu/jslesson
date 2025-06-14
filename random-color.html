@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            text-align: center;
+            padding:50px ;
+        }
+        h1 {
+            /*‌အရောင်မှာ အနှိမ့်ဆုံးက ၀ အမြင့်ဆုံး ၂၅၅    */
+            color: rgb(255, 250, 0);
+            font-size: 50px;
+        }
+        button{
+            padding: 10px 15px;
+            color: rgb(255, 0, 0);
+        }
+        #colorBox {
+            width: 200px;
+            height: 200px;
+            margin: 20px auto;
+        }
+    </style>
+</head>
+<body>
+    <h1>🎨 Random Color Box</h1>
+    <button onclick="changeColor()">Change Color</button>
+    <div id="colorBox"></div>
+
+    <script>
+        function changeColor(){
+
+            // rgb 0 and 255 
+            let r = Math.floor(Math.random() * 256);
+            let g = Math.floor(Math.random()*256);
+            let b = Math.floor(Math.random()*256)
+
+            const colorBox = document.getElementById('colorBox');
+            colorBox.style.backgroundColor = `rgb(${r}, ${g},${b})`;
+            
+        }
+
+
+    </script>
+</body>
+</html>

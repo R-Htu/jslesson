@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    .box {
+      width: 100px;
+      height: 100px;
+      background: coral;
+      margin: 100px;
+      position: relative;
+      cursor: pointer;
+    }
+
+    .floatText {
+      position: absolute;
+      color: green;
+      font-size: 20px;
+      font-weight: bold;
+      animation: floatUp 2s forwards;
+      pointer-events: none;
+    }
+
+    @keyframes floatUp {
+      0% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+      100% {
+        opacity: 0;
+        transform: translateY(-90px);
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div class="box" id="myBox">Click Me</div>
+
+<script>
+  const box = document.getElementById("myBox");
+
+  box.addEventListener("click", () => {
+    // Get box position relative to the page
+    const x = box.offsetLeft;
+    const y = box.offsetTop;
+
+    // Create floating text
+    const floatText = document.createElement("div");
+    floatText.className = "floatText";
+    floatText.textContent = "+1";
+    floatText.style.left = x + 30 + "px";  // position right of the box
+    floatText.style.top = y - 20 + "px";   // position above the box
+    floatText.style.position = "absolute";
+
+    document.body.appendChild(floatText);
+
+    // Remove after animation
+    setTimeout(() => floatText.remove(), 1000);
+  });
+</script>
+
+</body>
+</html>

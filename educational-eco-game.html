@@ -9,60 +9,114 @@
       padding: 0;
       box-sizing: border-box;
     }
+
     .container {
       max-width: 1500px;
       margin: 0 auto;
     }
-    #plastics {
-      background-image: url(images/fileld.jpg);
+
+    #collection {
+      background-image: url('https://www.wallpaperflare.com/static/499/42/480/louise-moore-county-county-park-revisit-wallpaper.jpg');
       background-position:top;
-      height: 500px;
+      height: 100vh;
       background-size: cover;
       background-position: center;
       position: relative;
+      overflow: hidden;
       
     }
-    .fa-trash-can {
-      color:green;
-      font-size: 4rem;
+    #scoreDiv {
+      padding: 10px;
+      border-radius: 8px;
+      position:absolute;
+      font-size: 2rem;
+      top: 2%;
+      right: 2%;
+      color: rgb(30, 243, 2);
+      background-color: rgb(136, 111, 94);
+    }
+    #score {
+      padding: 5px 10px;
     }
 
-    .plastic-position {
+    .pls {
       position: absolute;
     }
     .one   { color: brown; }
     .two   { color: red; }
     .three { color: blue; }
-    .four  { color: brown; }
-    .five  { color: pink; }
+    .four  { color: rgb(5, 223, 231); }
+    .five  { color: rgb(232, 244, 4); }
     .six   { color: gray; }
     .seven { color: violet; }
 
     .bin-collection img {
       width: 60px;
+      pointer-events: none;
     }
     #organic,
     #recycle,
     #hazardous,
     #general {
       position: absolute;
-      top: 50%;
-      width: 60px;
+      top: 60%;
+  
     }
-    #organic {
-      left: 20%;
+    #general {
+      left: 10%;
+
     }
 
     #recycle {
-      left: 30%;
+      left: 20%;
+
     }
 
     #hazardous {
+      left: 30%;
+    }
+
+    #organic {
       left: 40%;
     }
 
-    #general {
-      left: 50%;
+    .floatText {
+      position: absolute;
+      font-size: 2rem;
+      color: gold;
+      font-weight: bold;
+      animation: up 1s ease forwards;
+      pointer-events: none;
+    }
+
+      @keyframes up {
+        0% {
+          opacity: 1;
+          transform: translateY(0);
+        }
+        100% {
+          opacity: 0;
+          transform: translateY(-50px);
+        }
+    }
+
+
+    @media (max-width:768px) {
+        #organic,
+        #recycle,
+        #hazardous,
+        #general {
+          top: 55%;
+        }
+    }
+
+        @media (max-width:480px) {
+        #organic,
+        #recycle,
+        #hazardous,
+        #general {
+          top: 85%;
+        }
     }
 
   </style>
@@ -70,54 +124,145 @@
 <body>
 
   <div class="container">
-    <div id="plastics">
+    <div id="collection">
+      <div id="scoreDiv">Score:<span id="score">0</span></div>
       <div class="bin-collection">
-        <div id="organic"><img src="images/organic.png" alt=""></div>
-        <div id="recycle"><img src="images/recycle.png" alt=""></div>
-        <div id="hazardous"><img src="images/hazardous.png" alt=""></div>
-        <div id="general"><img src="images/general.png" alt=""></div>
+        <div id="general" class="bin" data-bin="general">
+        <img src="https://cdn-icons-png.flaticon.com/512/5499/5499405.png" alt="General">
+        </div>
+        <div id="organic" class="bin" data-bin="organic">
+        <img src="https://cdn-icons-png.flaticon.com/512/701/701056.png" alt="Organic">
+        </div>
+        <div id="recycle" class="bin" data-bin="recycle">
+        <img src="https://cdn-icons-png.flaticon.com/512/5994/5994810.png" alt="Recycle">
+        </div>
+        <div id="hazardous" class="bin" data-bin="hazardous">
+        <img src="https://cdn-icons-png.flaticon.com/512/8027/8027578.png" alt="Hazardous">
+        </div>
       </div>
     </div>
+
+    <!--🌷ƸӜƷ ƸӜƷ ƸӜƷ organic trash collection ƸӜƷ ƸӜƷ ƸӜƷ-->
+    <div id="organicCollection" class="orgainic-collection">
+   
+    </div>
+    
   </div>
 
-
-
 <script>
-  const totalPlastics = ["🥤", "🧴", "🧃", "🧋"];
-  const plasticsDiv = document.getElementById("plastics");
-  const iconClasses = ["one", "two", "three", "four", "five", "six", "seven"];
-  
+  // 🌽 Organic Trash
+  const organicTrash = ["🥥", "🍌", "🥒", "🍠", "🌽", "🥑", "🥝", "🍢", "🥜"];
 
+  // ♻️ Recyclable (Paper / Plastic / Glass)
+  const recyclableTrash = ["🥤", "🧴", "🧃", "🧋","🫙", "🫗", "🍾", "🥄", "🥢", "🧂", "📃", "📜", "📑", "📄", "🗞️", "📚", "🧷", "✂️", "🪣"];
+
+  // ☣️ Hazardous Waste
+  const hazardousTrash = ["🪫", "🔋", "🪛", "🚬", "⚱️", "🦯","☣️"];
+
+  // 🗑️ General Waste
+  const generalTrash = ["🏉", "⚾️", "🥏", "🧩", "🪘", "♟️", "🪈", "🧽", "🧽", "🪑", "🚪", "🖼️", "🪒", "🪮", "🎀", "🏮", "🔒"];
+
+  let draggedItem = null;
+  let originalPosition = { top: "", left: "" };
+  let point = 0;
+  const scoreDisplay = document.getElementById('score');
+  const collectionDiv = document.getElementById("collection");
+  const iconClasses = ["one", "two", "three", "four", "five", "six", "seven"];
+
+
+  // ┌( ͝° ͜ʖ͡°)=ε/̵͇̿̿/’̿’̿ ̿   Generate plastic icons
   iconClasses.forEach(icon => {
     const i = document.createElement('i')
     i.className = `fa-solid fa-bottle-water ${icon}`;
-    totalPlastics.push(i)
-  })
+    i.setAttribute('draggable', "true");
+    i.setAttribute('data-type', "recyclable");
+    recyclableTrash.push(i);
+  });
 
-  totalPlastics.forEach(val => {
-    const top    = `${Math.random()*20 + 70 }%`;
-    const left    = `${Math.random()*90}%`;
-    const fontSize = `${Math.random()*30 +20}px`;
-    if(typeof(val) === "string") {
+  // ヽ༼ ຈل͜ຈ༼ ▀̿̿Ĺ̯̿̿▀̿ ̿༽Ɵ͆ل͜Ɵ͆ ༽ﾉ 
+  recyclableTrash.forEach(val => {
+    const top = `${Math.random() * 20 + 70}%`;
+    const left = `${Math.random() * 90}%`;
+    const fontSize = `${Math.random() * 40 + 20}px`;
+    const deg = `rotate(${Math.random() * 360}deg)`;
+    
+    if (typeof val === "string") {
       const span = document.createElement('span');
-      span.style.display = 'block';
-      span.className = "plastic-position";
-      span.style.top    = top;
-      span.style.left    = left;
+      span.className = "pls";
+      span.setAttribute('draggable', "true");
+      span.setAttribute('data-type', "recyclable");
+      span.style.top = top;
+      span.style.left = left;
       span.style.fontSize = fontSize;
+      span.style.transform = deg;
       span.textContent = val;
-      plasticsDiv.appendChild(span);
-    }else {
-      val.classList.add('plastic-position');
+      collectionDiv.appendChild(span);
+    } else {
+      val.classList.add('pls');
       val.style.top = top;
       val.style.left = left;
       val.style.fontSize = fontSize;
-      plasticsDiv.appendChild(val);
+      val.style.transform = deg;
+      collectionDiv.appendChild(val);
     }
-  })
+  });
 
-  console.log(totalPlastics); 
+  // 	ʕっ•ᴥ•ʔっ Drag logic
+  document.querySelectorAll('.pls').forEach(item => {
+    item.addEventListener("dragstart", (e) => {
+      draggedItem = e.target;
+      originalPosition = {
+        top: draggedItem.style.top,
+        left: draggedItem.style.left
+      };
+    });
+  });
+
+  // ⤜(ⱺ ʖ̯ⱺ)⤏ Bin drop logic
+  document.querySelectorAll('.bin').forEach(bin => {
+    bin.addEventListener('dragover', e => e.preventDefault());
+
+    bin.addEventListener("drop", e => {
+      e.preventDefault();
+      if (!draggedItem) return;
+
+      const binType = bin.dataset.bin;
+      const itemType = draggedItem.dataset.type;
+
+      if (binType === "recycle" && itemType === "recyclable") {
+        showFloatingText("+5", bin.offsetLeft + 20, bin.offsetTop - 40);
+        updateScore(5);
+        draggedItem.remove();
+      } else {
+        showFloatingText("-3", bin.offsetLeft + 20, bin.offsetTop - 40);
+        updateScore(-3);
+
+        // •͡˘㇁•͡˘ Reset position
+        draggedItem.style.top = originalPosition.top;
+        draggedItem.style.left = originalPosition.left;
+      }
+      draggedItem = null;
+    });
+  });
+
+  // 	/|\ ^._.^ /|\ Floating text function
+  function showFloatingText(text, x, y) {
+    const floatText = document.createElement('div');
+    floatText.className = 'floatText';
+    floatText.textContent = text;
+    floatText.style.left = `${x}px`;
+    floatText.style.top = `${y}px`;
+    collectionDiv.appendChild(floatText);
+    setTimeout(() => floatText.remove(), 1000);
+  }
+
+  // 	ʕノ•ᴥ•ʔノ ︵ ┻━┻ Score update
+  function updateScore(pt) {
+    point += pt;
+    scoreDisplay.textContent = `${point}`;
+  }
 </script>
+
 
 </body>
 </html>

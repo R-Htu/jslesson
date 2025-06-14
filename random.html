@@ -4,9 +4,28 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <style>
+        body { text-align: center; font-family: sans-serif; padding: 50px; }
+        button { padding: 15px 30px; font-size: 18px; }
+        #colorBox { width: 200px; height: 200px; margin: 20px auto; border: 2px solid #000; }
+    </style>
 </head>
 <body>
+    <h1>🎨 Random Color Box</h1>
+    <button onclick="changeColor()">Change Color</button>
+    <div id="colorBox"></div>
     <script>
+
+        function getRandomColor() {
+            let r = Math.floor(Math.random() * 256);
+            let g = Math.floor(Math.random() * 256);
+            let b = Math.floor(Math.random() * 256);
+            return `rgb(${r}, ${g}, ${b})`;
+        }
+
+    function changeColor() {
+      document.getElementById("colorBox").style.backgroundColor = getRandomColor();
+    }
         const num1 = Math.random();
         console.log("num1 is " + num1)
         console.log('============================')
