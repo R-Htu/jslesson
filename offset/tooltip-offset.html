@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      gap: 20px;
+    }
+
+    .box {
+      width: 100px;
+      height: 100px;
+      background-color: steelblue;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .tooltip {
+      position: absolute;
+      background-color: black;
+      color: white;
+      padding: 5px 10px;
+      border-radius: 5px;
+      font-size: 14px;
+      opacity: 1;
+      transition: opacity 2s ease-out;
+      pointer-events: none;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="box">Box 1</div>
+  <div class="box">Box 2</div>
+  <div class="box">Box 3</div>
+
+  <script>
+    const boxes = document.querySelectorAll('.box');
+
+    boxes.forEach(box => {
+      box.addEventListener('click', () => {
+        const x = box.offsetLeft;
+        const y = box.offsetTop;
+
+        const tooltip = document.createElement('div');
+        tooltip.className = 'tooltip';
+        tooltip.textContent = `X: ${x}, Y: ${y}`;
+
+        tooltip.style.left = (x + 20) + 'px';
+        tooltip.style.top = (y - 30) + 'px';
+
+        document.body.appendChild(tooltip);
+
+        // Fade out and remove
+        setTimeout(() => {
+          tooltip.style.opacity = '0';
+        }, 100); // start fade after slight delay
+
+        setTimeout(() => {
+          tooltip.remove();
+        }, 2100);
+      });
+    });
+  </script>
+
+</body>
+</html>

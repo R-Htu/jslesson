@@ -2,6 +2,12 @@
 <html>
 <head>
   <style>
+    body{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
     .box {
       width: 100px;
       height: 100px;
@@ -9,11 +15,15 @@
       margin: 100px;
       position: relative;
       cursor: pointer;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-radius:2px 40px 0 2px;
     }
 
     .floatText {
       position: absolute;
-      color: green;
+      color: rgb(10, 9, 0);
       font-size: 20px;
       font-weight: bold;
       animation: floatUp 2s forwards;
@@ -47,7 +57,7 @@
     // Create floating text
     const floatText = document.createElement("div");
     floatText.className = "floatText";
-    floatText.textContent = "+1";
+    floatText.textContent = "+100";
     floatText.style.left = x + 30 + "px";  // position right of the box
     floatText.style.top = y - 20 + "px";   // position above the box
     floatText.style.position = "absolute";
@@ -55,7 +65,7 @@
     document.body.appendChild(floatText);
 
     // Remove after animation
-    setTimeout(() => floatText.remove(), 1000);
+    setTimeout(() => floatText.remove(), 2000);
   });
 </script>
 

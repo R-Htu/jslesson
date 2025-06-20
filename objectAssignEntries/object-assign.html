@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Object.assign Style Demo</title>
+  <style>
+    .box {
+      width: 100px;
+      height: 100px;
+      background: coral;
+      margin: 20px;
+    }
+    button {
+      padding: 10px;
+      margin: 10px;
+    }
+  </style>
+</head>
+<body>
+  <button onclick="applyRandomStyle()">Apply Random Style</button>
+  <div class="box" id="myBox"></div>
+ 
+  <script>
+    function getRandomColor() {
+      const letters = '0123456789ABCDEF';
+      let color = '#';
+      for (let i = 0; i < 6; i++) {
+        color += letters[Math.floor(Math.random() * 16)];
+      }
+      return color;
+    }
+
+    function randomStyle() {
+      return {
+        top: `${Math.random() * 300}px`,
+        left: `${Math.random() * 300}px`,
+        fontSize: `${Math.random() * 20 + 10}px`,
+        transform: `rotate(${Math.random() * 360}deg)`,
+        backgroundColor: getRandomColor() // 🎨 new!
+      };
+    }
+
+    function applyRandomStyle() {
+      const style = randomStyle();
+      const el = document.getElementById("myBox");
+
+      Object.assign(el.style, {
+        position: "absolute",
+        top: style.top,
+        left: style.left,
+        fontSize: style.fontSize,
+        transform: style.transform,
+        backgroundColor: style.backgroundColor
+      });
+
+      console.log("Applied style:", style);
+    }
+  </script>
+
+</body>
+</html>

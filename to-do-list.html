@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Week 1 To-Do List App</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 2rem;
+      max-width: 400px;
+      margin: auto;
+    }
+    h1 {
+      text-align: center;
+    }
+    #taskInput {
+      width: 100%;
+      padding: 10px;
+      font-size: 1rem;
+    }
+    #addBtn {
+      margin-top: 10px;
+      padding: 10px;
+      width: 100%;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+    ul {
+      list-style: none;
+      padding: 0;
+      margin-top: 20px;
+    }
+    li {
+      padding: 10px;
+      border: 1px solid #ddd;
+      margin-bottom: 8px;
+      cursor: pointer;
+      user-select: none;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    li.completed {
+      text-decoration: line-through;
+      color: gray;
+    }
+    .removeBtn {
+      background: red;
+      border: none;
+      color: white;
+      padding: 4px 8px;
+      cursor: pointer;
+      font-weight: bold;
+      border-radius: 4px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>To-Do List</h1>
+  <input id="taskInput" type="text" placeholder="Add a new task..." />
+  <button id="addBtn">Add Task</button>
+
+  <ul id="taskList"></ul>
+
+  <script>
+    // Arrow function to create a new task element
+    const createTaskElement = (taskText) => {
+      const li = document.createElement('li');
+      li.textContent = taskText;
+
+      // Create remove button for each task
+      const removeBtn = document.createElement('button');
+      removeBtn.textContent = 'X';
+      removeBtn.className = 'removeBtn';
+
+      // Append remove button to list item
+      li.appendChild(removeBtn);
+
+      return li;
+    };
+
+    // Grab DOM elements
+    const taskInput = document.getElementById('taskInput');
+    const addBtn = document.getElementById('addBtn');
+    const taskList = document.getElementById('taskList');
+
+    // Add new task when button is clicked
+    addBtn.addEventListener('click', () => {
+      const taskText = taskInput.value.trim();
+      if (taskText === '') {
+        alert('Please enter a task!');
+        return;
+      }
+
+      // Create task element and add to list
+      const taskElement = createTaskElement(taskText);
+      taskList.appendChild(taskElement);
+
+      // Clear input
+      taskInput.value = '';
+    });
+
+    // Event delegation: handle clicks on the task list (toggle & remove)
+    taskList.addEventListener('click', (e) => {
+      const target = e.target;
+
+      // Remove task if clicked on remove button
+      if (target.classList.contains('removeBtn')) {
+        const li = target.parentElement;
+        li.remove();
+        return;
+      }
+
+      // Toggle completed state if clicked on list item text
+      if (target.tagName === 'LI') {
+        target.classList.toggle('completed');
+      }
+    });
+
+    // Optional: Add task on Enter key
+    taskInput.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') {
+        addBtn.click();
+      }
+    });
+  </script>
+</body>
+</html>

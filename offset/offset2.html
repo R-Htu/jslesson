@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .container {
+            display:flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            gap: 20px;
+        }
+        .box {
+            background-color: rgb(17, 105, 134);
+            width: 100px;
+            height: 100px;
+            display:flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            color: white;
+            font-weight: bolder;
+        }
+        .tooltip {
+            position: absolute;
+            background: rgb(80, 64, 64);
+            padding: 5px 10px;
+            border-radius: 5px;
+            opacity: 1;
+            transition: opacity 1s ease-out;
+        }
+
+
+    </style>
+
+</head>
+<body>
+    <div class="container">
+        <div class="box">Box 1</div>
+        <div class="box">Box 2</div>
+        <div class="box">Box 3</div>
+       
+  
+    </div>
+    <script src="offset2.js"></script>
+
+</body>
+</html>

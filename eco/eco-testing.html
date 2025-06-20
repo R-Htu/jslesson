@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Educational Eco Game for Children</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" />
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Edu+VIC+WA+NT+Hand+Pre:wght@400..700&display=swap');
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      touch-action: none;
+      user-select: none;
+    }
+
+    .container {
+      max-width: 1500px;
+      margin: 0 auto;
+    }
+
+    #collection {
+      background-image: url('https://www.wallpaperflare.com/static/499/42/480/louise-moore-county-county-park-revisit-wallpaper.jpg');
+      background-position: center;
+      height: 100vh;
+      background-size: cover;
+      position: relative;
+      overflow: hidden;
+    }
+
+    #scoreDiv {
+      padding: 5px 10px;
+      border-radius: 0 4px 0 2px;
+      position: absolute;
+      font-size: 2rem;
+      top: 8%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: #020800;
+      box-shadow: 0 0 15px #7b6d02, 0 0 30px rgba(72, 255, 0, 0.2);
+      font-family: "Edu VIC WA NT Hand Pre", Courier, monospace;
+      transition: transform 0.3s ease;
+    }
+
+    #score {
+      padding: 10px;
+      background: rgba(113, 91, 91, 0.4);
+      border-radius: 10px;
+      transition: all 0.3s ease;
+      display: inline-block;
+      font-variant-numeric: tabular-nums;
+      margin-left: 5px;
+    }
+
+    .score-pop {
+      transform: scale(1.4);
+      color: #fd0000;
+    }
+
+    .pls {
+      position: absolute;
+    }
+
+    .one { color: brown; }
+    .two { color: red; }
+    .three { color: blue; }
+    .four { color: rgb(5, 223, 231); }
+    .five { color: rgb(232, 244, 4); }
+    .six { color: gray; }
+    .seven { color: violet; }
+
+    .bin-collection img {
+      width: 60px;
+      pointer-events: none;
+    }
+
+    #organic, #recycle, #hazardous, #general {
+      position: absolute;
+      top: 55%;
+    }
+
+    #general { left: 10%; }
+    #recycle { left: 20%; }
+    #hazardous { left: 30%; }
+    #organic { left: 40%; }
+
+    .floatText {
+      position: absolute;
+      font-size: 2rem;
+      color: gold;
+      font-weight: bold;
+      animation: up 2s ease forwards;
+      pointer-events: none;
+    }
+
+    @keyframes up {
+      0% { opacity: 1; transform: translateY(0); }
+      100% { opacity: 0; transform: translateY(-120px); }
+    }
+
+    .award {
+      position: fixed;
+      top: 20%;
+      left: 5%;
+      font-size: 6rem;
+      z-index: 1000;
+      animation: glowPop 2s ease-out forwards;
+    }
+
+    @keyframes glowPop {
+      0% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(0);
+        text-shadow: 0 0 5px #171515, 0 0 20px #00ff9d, 0 0 30px #00ff9d;
+      }
+      50% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1.4);
+      }
+      100% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(1);
+      }
+    }
+
+    @keyframes burst {
+      0% {
+        opacity: 1;
+        transform: scale(1);
+      }
+      100% {
+        opacity: 0;
+        transform: scale(0.5) translateY(-100px);
+      }
+    }
+
+    @keyframes bounceGlow {
+      0% {
+        transform: translate(-50%, -50%) scale(0);
+        opacity: 0;
+        text-shadow: 0 0 5px gold, 0 0 15px #ff0, 0 0 30px orange;
+      }
+      50% {
+        transform: translate(-50%, -50%) scale(1.4);
+        opacity: 1;
+        text-shadow: 0 0 15px gold, 0 0 25px #ff0, 0 0 40px orange;
+      }
+      100% {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 0;
+      }
+    }
+
+    @keyframes emojiFall {
+      100% {
+        transform: translateY(120vh) rotate(360deg);
+        opacity: 0;
+      }
+    }
+
+    @media (max-width:768px) {
+      #organic, #recycle, #hazardous, #general {
+        top: 54%;
+      }
+    }
+
+    @media (max-width:480px) {
+      #organic, #recycle, #hazardous, #general {
+        top: 53%;
+      }
+      #general { left: 10%; }
+      #recycle { left: 30%; }
+      #hazardous { left: 50%; }
+      #organic { left: 70%; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+	<div id="collection">
+	  <div id="scoreDiv">Score:<span id="score">0</span></div>
+	  <div class="bin-collection">
+		<div id="general" class="bin" data-bin="general">
+		  <img src="https://cdn-icons-png.flaticon.com/512/5499/5499405.png" alt="General">
+		</div>
+		<div id="organic" class="bin" data-bin="organic">
+		  <img src="https://cdn-icons-png.flaticon.com/512/701/701056.png" alt="Organic">
+		</div>
+		<div id="recycle" class="bin" data-bin="recycle">
+		  <img src="https://cdn-icons-png.flaticon.com/512/5994/5994810.png" alt="Recycle">
+		</div>
+		<div id="hazardous" class="bin" data-bin="hazardous">
+		  <img src="https://cdn-icons-png.flaticon.com/512/8027/8027578.png" alt="Hazardous">
+		</div>
+	  </div>
+	</div>
+	<div id="organicCollection" class="orgainic-collection"></div>
+  </div>
+
+<script>
+
+const TRASH_CATEGORIES = {
+  organic: ["🥥", "🍌", "🥀", "🍠", "🌽", "🥑", "🥝", "🍢", "🥜", "🍂", "🍁", "🪹", "🌿", "🪻", "🍃", "🫛", "🥒"],
+  recyclable: ["🥤", "🧴", "🧃", "🧋", "🫙", "🫗", "🍾", "🥄", "🥢", "🧂", "📃", "📜", "📑", "📄", "🗞", "🥽", "🧷", "✂️", "🪣"],
+  hazardous: ["🪫", "🔋", "🪛", "🚬", "⚱️", "🦯", "☣️"],
+  general: ["💍", "🌂", "👛", "👜", "👝", "🎒", "👒", "👠", "🥿", "👢", "🏉", "🪭", "👓", "⚾️", "🥏", "🧩", "🪘", "♟", "🪈", "🧽", "🪑", "🚪", "🖼", "🪒", "🪮", "🎀", "🏮", "🔒"]
+};
+
+let draggedItem = null;
+let originalPosition = { top: "", left: "" };
+let point = 0;
+
+const scoreDisplay = document.getElementById('score');
+const collectionDiv = document.getElementById("collection");
+const iconClasses = ["one", "two", "three", "four", "five", "six", "seven"];
+
+function randomStyle() {
+  return {
+    top: `${Math.random() * 30 + 60}%`,
+    left: `${Math.random() * 90}%`,
+    fontSize: `${Math.random() * 30 + 20}px`,
+    transform: `rotate(${Math.random() * 360}deg)`
+  };
+}
+
+function createTrashItem(val, type, isIcon = false, iconClass = "") {
+  const el = document.createElement(isIcon ? "i" : "span");
+  el.setAttribute("draggable", "true");
+  el.setAttribute("data-type", type);
+  el.classList.add("pls");
+
+  if (!isIcon) {
+    el.textContent = val;
+  } else {
+    el.className = `fa-solid fa-${val} ${iconClass} pls`;
+  }
+
+  const style = randomStyle();
+  Object.assign(el.style, {
+    position: "absolute",
+    top: style.top,
+    left: style.left,
+    fontSize: style.fontSize,
+    transform: style.transform
+  });
+
+  collectionDiv.appendChild(el);
+}
+
+Object.entries(TRASH_CATEGORIES).forEach(([type, values]) => {
+  values.forEach(val => createTrashItem(val, type));
+});
+
+iconClasses.forEach(icon => createTrashItem("bottle-water", "recyclable", true, icon));
+iconClasses.forEach(icon => createTrashItem("bag-shopping", "general", true, icon));
+
+document.addEventListener('dragstart', (e) => {
+  if (e.target.classList.contains('pls')) {
+    draggedItem = e.target;
+    originalPosition = {
+      top: draggedItem.style.top,
+      left: draggedItem.style.left
+    };
+  }
+});
+
+document.querySelectorAll('.bin').forEach(bin => {
+  bin.addEventListener('dragover', e => e.preventDefault());
+
+  bin.addEventListener("drop", e => {
+    e.preventDefault();
+    if (!draggedItem) return;
+
+    const binType = bin.dataset.bin;
+    const itemType = draggedItem.dataset.type;
+    const dropX = e.clientX;
+    const dropY = e.clientY;
+
+    if (
+      (binType === "recycle" && itemType === "recyclable") ||
+      (binType === "organic" && itemType === "organic") ||
+      (binType === "general" && itemType === "general") ||
+      (binType === "hazardous" && itemType === "hazardous")
+    ) {
+      showFloatingText("+5", dropX, dropY);
+      updateScore(5);
+      draggedItem.remove();
+    } else {
+      showFloatingText("-3", dropX, dropY);
+      updateScore(-3);
+      draggedItem.style.top = originalPosition.top;
+      draggedItem.style.left = originalPosition.left;
+    }
+
+    draggedItem = null;
+  });
+});
+
+function enableTouchSupport() {
+  document.querySelectorAll('.pls').forEach(item => {
+    item.addEventListener('touchstart', (e) => {
+      draggedItem = e.target;
+      originalPosition = {
+        top: draggedItem.style.top,
+        left: draggedItem.style.left
+      };
+    });
+
+    item.addEventListener('touchmove', (e) => {
+      if (!draggedItem) return;
+      const touch = e.touches[0];
+      draggedItem.style.left = `${touch.clientX - 25}px`;
+      draggedItem.style.top = `${touch.clientY - 25}px`;
+    });
+
+    item.addEventListener('touchend', (e) => {
+      const touch = e.changedTouches[0];
+      const dropX = touch.clientX;
+      const dropY = touch.clientY;
+
+      let droppedOnBin = null;
+      document.querySelectorAll('.bin').forEach(bin => {
+        const rect = bin.getBoundingClientRect();
+        if (
+          dropX > rect.left &&
+          dropX < rect.right &&
+          dropY > rect.top &&
+          dropY < rect.bottom
+        ) {
+          droppedOnBin = bin;
+        }
+      });
+
+      if (droppedOnBin) {
+        const binType = droppedOnBin.dataset.bin;
+        const itemType = draggedItem.dataset.type;
+
+        if (
+          (binType === "recycle" && itemType === "recyclable") ||
+          (binType === "organic" && itemType === "organic") ||
+          (binType === "general" && itemType === "general") ||
+          (binType === "hazardous" && itemType === "hazardous")
+        ) {
+          showFloatingText("+5", dropX, dropY);
+          updateScore(5);
+          draggedItem.remove();
+        } else {
+          showFloatingText("-3", dropX, dropY);
+          updateScore(-3);
+          draggedItem.style.top = originalPosition.top;
+          draggedItem.style.left = originalPosition.left;
+        }
+      } else {
+        draggedItem.style.top = originalPosition.top;
+        draggedItem.style.left = originalPosition.left;
+      }
+
+      draggedItem = null;
+    });
+  });
+}
+
+function showFloatingText(text, x, y) {
+  const floatText = document.createElement('div');
+  floatText.className = 'floatText';
+  floatText.textContent = text;
+  floatText.style.position = "absolute";
+  floatText.style.left = `${x}px`;
+  floatText.style.top = `${y}px`;
+  floatText.style.fontSize = "24px";
+  floatText.style.fontWeight = "bold";
+  floatText.style.color = text.startsWith("+") ? "green" : "red";
+  collectionDiv.appendChild(floatText);
+  setTimeout(() => floatText.remove(), 1000);
+}
+
+function updateScore(pt) {
+  point += pt;
+  scoreDisplay.textContent = `${point}`;
+  scoreDisplay.classList.add("score-pop");
+  setTimeout(() => {
+    scoreDisplay.classList.remove("score-pop");
+  }, 300);
+
+  if (point >= 10) {
+    startEmojiRain();
+    const award = document.createElement("div");
+    award.className = "award";
+    award.innerHTML = `<i class="fa-solid fa-trophy" style="width:80px;color:gold; filter: drop-shadow(0 0 2px gold);"></i>`;
+    document.body.appendChild(award);
+    award.style.animation = "bounceGlow 2s ease-out forwards";
+
+    const rect = scoreDisplay.getBoundingClientRect();
+    showEmojiBurst(rect.left, rect.top);
+
+    const winAudio = new Audio("https://assets.mixkit.co/sfx/preview/mixkit-unlock-game-notification-253.mp3");
+    winAudio.play();
+
+    setTimeout(() => award.remove(), 2000);
+  }
+
+  const pointAudio = new Audio("https://assets.mixkit.co/sfx/preview/mixkit-arcade-score-interface-217.mp3");
+  pointAudio.play();
+}
+
+function showEmojiBurst(x, y) {
+  for (let i = 0; i < 5; i++) {
+    const emoji = document.createElement("div");
+    emoji.textContent = ["🎉", "🌟", "💥", "✨"][Math.floor(Math.random() * 4)];
+    emoji.style.position = "absolute";
+    emoji.style.left = `${x+20}px`;
+    emoji.style.top = `${y+40}px`;
+    emoji.style.fontSize = `${20 + Math.random() * 20}px`;
+    emoji.style.pointerEvents = "none";
+    emoji.style.animation = "burst 1s ease-out forwards";
+    emoji.style.transform = `translate(${Math.random() * 200 - 100}px, ${Math.random() * -150}px) rotate(${Math.random() * 360}deg)`;
+    document.body.appendChild(emoji);
+    setTimeout(() => emoji.remove(), 1500);
+  }
+}
+
+function startEmojiRain() {
+  for (let i = 0; i < 30; i++) {
+    const emoji = document.createElement("div");
+    emoji.textContent = ["🎉", "✨", "🏅", "🌟", "💚"][Math.floor(Math.random() * 5)];
+    emoji.style.position = "fixed";
+    emoji.style.left = `${Math.random() * 100}vw`;
+    emoji.style.top = `-5vh`;
+    emoji.style.fontSize = `${16 + Math.random() * 20}px`;
+    emoji.style.animation = "emojiFall 2s ease-in forwards";
+    document.body.appendChild(emoji);
+    setTimeout(() => emoji.remove(), 2000);
+  }
+}
+
+enableTouchSupport();
+</script>
+
+</body>
+</html>

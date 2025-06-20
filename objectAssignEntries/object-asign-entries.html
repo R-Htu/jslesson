@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Object.assign() & Object.entries() Playground</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 2rem;
+      background: #f4f9ff;
+    }
+    h1 {
+      color: #2a6f97;
+    }
+    button {
+      padding: 10px 20px;
+      margin: 10px 0;
+      background: #2a6f97;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    pre {
+      background: #e3f2fd;
+      padding: 1rem;
+      border-radius: 8px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>🎓 JS Object Playground</h1>
+
+  <h2>🔹 Object.assign()</h2>
+  <button onclick="showAssignExample()">Try Object.assign()</button>
+  <pre id="assignOutput">Click the button to see the result.</pre>
+  <div id="box">Hello</div>
+  <h2>🔹 Object.entries()</h2>
+  <button onclick="showEntriesExample()">Try Object.entries()</button>
+  <pre id="entriesOutput">Click the button to see the result.</pre>
+
+  <script>
+
+    const box = document.getElementById("box");
+    Object.assign(box.style, {
+      backgroundColor: "skyblue",
+      color: "white",
+      padding: "10px"
+    });
+    function showAssignExample() {
+      const target = { a: 1 };
+      const source = { b: 2, c: 3 };
+      const result = Object.assign({}, target, source);
+
+      document.getElementById("assignOutput").textContent =
+        `Target: ${JSON.stringify(target)}\nSource: ${JSON.stringify(source)}\nResult (new object): ${JSON.stringify(result)}`;
+    }
+
+    function showEntriesExample() {
+      const person = { name: "Anthony", age: 10 };
+      const entries = Object.entries(person);
+
+      let output = `Object: ${JSON.stringify(person)}\n\nEntries:\n`;
+      for (const [key, value] of entries) {
+        output += `- ${key}: ${value}\n`;
+      }
+
+      document.getElementById("entriesOutput").textContent = output;
+    }
+
+        //✅ 1. Combine multiple objects
+        const target = { a: 1 };
+        const source = { b: 2, c: 3 };
+
+        const result = Object.assign(target, source);
+
+        console.log(result); // { a: 1, b: 2, c: 3 }
+        console.log(target); // target is now changed too: { a: 1, b: 2, c: 3 }
+
+        //✅ 2. Add properties to an object
+        const original = { name: "Anthony", age: 10 };
+        const copy = Object.assign({}, original);
+
+        console.log(copy); // { name: "Anthony", age: 10 }
+
+        //✅ 3. Override properties
+        const settings = { theme: "light", font: "small" };
+        Object.assign(settings, { theme: "dark" });
+
+        console.log(settings);
+        // 👉 { theme: "dark", font: "small" }
+
+
+        //📌 Example: Merging Configs
+        const defaultSettings = { theme: "light", font: "medium" };
+        const userSettings = { theme: "dark" };
+
+        const finalSettings = Object.assign({}, defaultSettings, userSettings);
+        console.log(finalSettings);
+        // 👉 { theme: "dark", font: "medium" }
+
+
+        const person = { name: "Anthony", age: 10 };
+
+        const entries = Object.entries(person);
+
+        console.log(entries);
+        // Output: [ ['name', 'Anthony'], ['age', 10] ]
+
+        const dog = { name: "Brova", breed: "Beagle", age: 3 };
+
+        for (const [key, value] of Object.entries(dog)) {
+        console.log(`${key}: ${value}`);
+        }
+
+        // Output:
+        // name: Brova
+        // breed: Beagle
+        // age: 3
+
+
+    </script>
+</body>
+</html>
