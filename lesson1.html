@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <input type="text" id="input">
+    <button id="btn">Submit</button>
+    <div class="name" id="myName">Here: </div>
+
+    <p id="firstPara">This is the first paragraph.</p>
+
+
+    <script>
+        const firstParagraph = document.getElementById('firstPara');
+        const myName = document.getElementById('myName');
+       // firstParagraph.textContent = "Hello";
+       firstParagraph.addEventListener('click',()=>{
+        firstParagraph.textContent = "Heelo tehre";
+        myName.textContent = "This is the first div";
+       })
+
+       const myArray = ["James", "Mary","Schmit", "Anthony"]
+        const sentence = " James Mary John Bob ";
+        
+     //split() က  string ကနေ array ကို ပြောင်းပေး 
+     // ရေးနည်း string.split(' ')
+     // ကွင်းစကွင်းပိတ်မှာ ကိုယ်တန်ဖိုးဖြတ်ချင် အရာကို ထည့်ပေး
+        console.log(sentence.split(' '));
+    // trim() method ဆိုတာက  string ရဲ့ အရှေ့ဆုံးက space နဲ့ အနောက်ဆုံးက space ကို ဖယ်ပေးတာ
+    // ရေးနည်း string.trim()
+        console.log(sentence.trim().split(' ')[2]);
+
+
+        // join() array ကနေ string ပြောင်းပေး
+        // ရေးနည်းက array.join()
+        console.log(myArray.join(" "));
+
+       const btn = document.getElementById('btn');
+
+       btn.addEventListener('click', ()=>{
+        const input = document.getElementById('input');
+     
+     
+        myName.textContent = input.value.trim();
+
+       })
+
+       //function myFun() {
+
+       //}
+
+
+
+     let a = 7;
+     let operator = "+";
+     let b = 8;
+     let sum = a + b;
+     console.log(sum);
+
+
+
+    </script>
+</body>
+</html>

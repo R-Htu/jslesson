@@ -1,0 +1,87 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Smoothie Promise Demo</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      background: #fffbe6;
+      padding: 50px;
+    }
+
+    h1 {
+      color: #ff4d4d;
+    }
+
+    button {
+      padding: 10px 20px;
+      font-size: 18px;
+      background-color: #ff6699;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      margin-top: 20px;
+    }
+
+    button:hover {
+      background-color: #ff3366;
+    }
+
+    #output {
+      margin-top: 40px;
+      font-size: 24px;
+      color: #333;
+      min-height: 80px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>🍓🍌 Smoothie Shop</h1>
+  <p>Click the button to make a smoothie using JavaScript Promises!</p>
+  <button onclick="makeSmoothie()">Make Smoothie</button>
+
+  <div id="output">Waiting for your order...</div>
+
+  <script>
+    const output = document.getElementById("output");
+
+    function getFruits() {
+      return new Promise((resolve, reject) => {
+        output.textContent = "Getting fruits... 🍓🍌";
+        setTimeout(() => {
+          resolve("🍓 + 🍌");
+        }, 1000);
+      });
+    }
+
+    function blendFruits(fruits) {
+      return new Promise((resolve, reject) => {
+        output.textContent = `Blending ${fruits}... 🌀`;
+        setTimeout(() => {
+          resolve("🍓🍌 smoothie");
+        }, 1000);
+      });
+    }
+
+    function serveSmoothie(smoothie) {
+      output.textContent = `✅ Here's your ${smoothie}! Enjoy! 🥤`;
+    }
+
+    function makeSmoothie() {
+      getFruits()
+        .then(fruitCombo => blendFruits(fruitCombo))
+        .then(smoothie => serveSmoothie(smoothie))
+        .catch(error => {
+          output.textContent = "❌ Something went wrong: " + error;
+        });
+    }
+  </script>
+
+</body>
+</html>

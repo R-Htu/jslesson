@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Simple Calculator</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f0f4f8;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .calculator {
+      background: white;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+      width: 260px;
+    }
+    input, select, button {
+      width: 90%;
+      padding: 10px;
+      margin: 10px 0;
+      font-size: 16px;
+    }
+    #result {
+      margin-top: 15px;
+      font-weight: bold;
+      color: #333;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+
+<div class="calculator">
+  <h2>Simple Calculator</h2>
+  <input type="number" id="num1" placeholder="Enter first number">
+  <input type="number" id="num2" placeholder="Enter second number">
+  <select id="operation">
+    <option value="add">Add (+)</option>
+    <option value="subtract">Subtract (-)</option>
+    <option value="multiply">Multiply (×)</option>
+    <option value="divide">Divide (÷)</option>
+  </select>
+  <button onclick="calculate()">Calculate</button>
+  <div id="result"></div>
+</div>
+
+<script>
+  // Callback functions for operations
+  function add(a, b) {
+    return a + b;
+  }
+
+  function subtract(a, b) {
+    return a - b;
+  }
+
+  function multiply(a, b) {
+    return a * b;
+  }
+
+  function divide(a, b) {
+    if (b === 0) return 'Error: Divide by 0';
+    return a / b;
+  }
+
+  function calculate() {
+    const num1 = parseFloat(document.getElementById('num1').value);
+    const num2 = parseFloat(document.getElementById('num2').value);
+    const operation = document.getElementById('operation').value;
+    let result;
+
+    // Use callback depending on selected operation
+    function operate(callback) {
+      return callback(num1, num2);
+    }
+
+    switch (operation) {
+      case 'add':
+        result = operate(add);
+        break;
+      case 'subtract':
+        result = operate(subtract);
+        break;
+      case 'multiply':
+        result = operate(multiply);
+        break;
+      case 'divide':
+        result = operate(divide);
+        break;
+      default:
+        result = 'Invalid operation';
+    }
+
+    document.getElementById('result').textContent = 'Result: ' + result;
+  }
+</script>
+
+</body>
+</html>

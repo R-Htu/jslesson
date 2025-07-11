@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Transition All vs Specific</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 40px;
+      background: #f0f4f8;
+    }
+
+    h2 {
+      margin-top: 40px;
+      color: #333;
+    }
+
+    .box {
+      display: inline-block;
+      margin-right: 40px;
+    }
+
+    button {
+      padding: 15px 25px;
+      font-size: 18px;
+      border: none;
+      cursor: pointer;
+      color: white;
+      background-color: #3498db;
+      border-radius: 5px;
+    }
+
+    /* 👇 Button A: transition all */
+    .all-transition {
+      transition: all 0.5s;
+    }
+
+    /* 👇 Button B: only background-color transition */
+    .background-only {
+      transition: background-color 0.5s;
+    }
+
+    /* 👇 When hovered, both buttons will grow and change background */
+    button:hover {
+      background-color: #2ecc71;
+      transform: scale(1.3); /* make it bigger */
+    }
+  </style>
+</head>
+<body>
+
+  <h2>🔄 transition: all 0.5s</h2>
+  <div class="box">
+    <button class="all-transition">Grows & Fades</button>
+  </div>
+
+  <h2>🎯 transition: background-color 0.5s</h2>
+  <div class="box">
+    <button class="background-only">Only Fades</button>
+  </div>
+
+</body>
+</html>

@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Pet Object Challenge</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(to right, #ffe0e0, #e0f7fa);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .box {
+      background: #fff;
+      padding: 25px;
+      border-radius: 20px;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+      max-width: 400px;
+      width: 100%;
+    }
+
+    .info {
+      margin-bottom: 12px;
+      font-size: 16px;
+    }
+
+    .info strong {
+      color: #333;
+    }
+
+    button {
+      margin: 5px 3px;
+      padding: 8px 12px;
+      font-size: 14px;
+      background: #4caf50;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #388e3c;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="box">
+    <h2>🐾 Meet My Pet</h2>
+    <div class="info"><strong>Name:</strong> <span id="pet-name">-</span></div>
+    <div class="info"><strong>Age:</strong> <span id="pet-age">-</span></div>
+    <div class="info"><strong>Type:</strong> <span id="pet-type">-</span></div>
+    <div class="info"><strong>Tricks:</strong> <span id="pet-tricks">-</span></div>
+    <div class="info"><strong>Greeting:</strong> <span id="pet-greeting">-</span></div>
+
+    <button onclick="pet.showName()">👁️ Show Name</button>
+    <button onclick="pet.showAge()">👁️ Show Age</button>
+    <button onclick="pet.showType()">👁️ Show Type</button>
+    <button onclick="pet.showTricks()">👁️ Show Tricks</button>
+    <button onclick="pet.ageUp()">🎂 Increase Age</button>
+    <button onclick="pet.addTrick('fetch')">➕ Add Trick</button>
+    <button onclick="pet.greet()">🐶 Greet</button>
+  </div>
+
+  <script>
+    const pet = {
+      name: "Bobo",
+      age: 3,
+      type: "dog",
+      tricks: ["sit", "roll over"],
+
+      showName: function () {
+        document.getElementById("pet-name").textContent = this.name;
+      },
+
+      showAge: function () {
+        document.getElementById("pet-age").textContent = this.age;
+      },
+
+      showType: function () {
+        document.getElementById("pet-type").textContent = this.type;
+      },
+
+      showTricks: function () {
+        document.getElementById("pet-tricks").textContent = this.tricks.join(", ");
+      },
+
+      greet: function () {
+        const message = `Woof! I'm ${this.name} the ${this.type} and I know how to ${this.tricks[0]}.`;
+        document.getElementById("pet-greeting").textContent = message;
+      },
+
+      ageUp: function () {
+        this.age++;
+        this.showAge();
+      },
+
+      addTrick: function (newTrick) {
+        this.tricks.push(newTrick);
+        this.showTricks();
+      }
+    };
+  </script>
+
+</body>
+</html>

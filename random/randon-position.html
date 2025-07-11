@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Object.assign Style Demo</title>
+  <style>
+    .box {
+      width: 100px;
+      height: 100px;
+      background: coral;
+      margin: 20px;
+    }
+    button {
+      padding: 10px;
+      margin: 10px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="box" id="myBox"></div>
+  <button onclick="applyRandomStyle()">Apply Random Style</button>
+
+  <script>
+    function randomStyle() {
+      return {
+        top: `${Math.random() * 300}px`,
+        left: `${Math.random() * 300}px`,
+        fontSize: `${Math.random() * 20 + 10}px`,
+        transform: `rotate(${Math.random() * 360}deg)`
+      };
+    }
+
+    function applyRandomStyle() {
+      const style = randomStyle();
+      const el = document.getElementById("myBox");
+
+      el.style.position = "absolute";
+      el.style.top = style.top;
+      el.style.left = style.left;
+      el.style.fontSize = style.fontSize;
+      el.style.transform = style.transform;
+
+      console.log("Applied style:", style);
+    }
+  </script>
+
+</body>
+</html>

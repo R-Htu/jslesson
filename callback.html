@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        //let name = "Anthony"
+        function sayHello(name) {
+            console.log(`Hello ${name}`);
+        }
+
+        //sayHello("Anthony");
+
+        function greetUser(callback) {
+            const userName = 'Anthony';
+            callback(userName);
+        }
+
+        greetUser(sayHello);
+
+        function add(a,b,callback) {
+            const result = a + b;
+            callback(result);
+        }
+
+        function showResult(res) {
+            console.log(`The answer is: ${res}`)
+        }
+
+        add(100,50,showResult);
+
+        // function showMessage (){}
+
+        const showMessage = () => {
+            console.log("This message will be shown after 3 seconds")
+        }
+
+        setTimeout(showMessage,3000);
+
+
+    </script>
+</body>
+</html>

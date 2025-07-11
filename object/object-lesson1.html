@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>JavaScript Object Visualizer</title>
+  <style>
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(to right, #e0f7fa, #f1f8e9);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+    }
+
+    .box {
+        background: #ffffff;
+        border-radius: 20px;
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        padding: 30px 25px;
+        max-width: 350px;
+        width: 100%;
+        transition: transform 0.3s ease;
+    }
+
+    .box:hover {
+        transform: scale(1.02);
+    }
+
+    h2 {
+        color: #2c3e50;
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .info {
+        margin-bottom: 15px;
+        font-size: 16px;
+        color: #34495e;
+    }
+
+    .info strong {
+        color: #2c3e50;
+    }
+
+    button {
+        background-color: #00bcd4;
+        color: #ffffff;
+        border: none;
+        padding: 10px 14px;
+        margin: 5px 4px;
+        font-size: 14px;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+        background-color: #0097a7;
+    }
+
+    button:active {
+        transform: scale(0.98);
+    }
+
+  </style>
+</head>
+<body>
+
+
+
+  <div class="box">
+    <h2>🧠 Meet the Object: <code>person</code></h2>
+    <div class="info"><strong>Name:</strong> <span id="name">Anthony</span></div>
+    <div class="info"><strong>Age:</strong> <span id="age">10</span></div>
+    <div class="info"><strong>Hobbies:</strong> <span id="hobbies">drawing, playing games</span></div>
+    <div class="info"><strong>Greeting:</strong> <span id="greeting">-</span></div>
+    <button onclick="person.greet()">👋 Greet</button>
+    <button onclick="person.ageUp()">🎂 Increase Age</button>
+    <button onclick="person.addHobby('coding')">➕ Add Hobby</button>
+  </div>
+
+  <script>
+    // JavaScript Object
+    const person = {
+      name: "Anthony",
+      age: 10,
+      hobbies: ["drawing", "playing games"],
+
+      // ဒီ greet method ထဲမှာပဲ တစ်ခါတည်း သူနဲ့ သက်ဆိုင်တဲ့ Dom ကို ဆောက်
+      greet: function () {
+        const message = `Hi! I'm ${this.name} and I love ${this.hobbies[0]}.`;
+        document.getElementById("greeting").textContent = message;
+      },
+
+      // ဒီ increase age Method မှာရော တစ်ခါတည်း သူနဲ့ သက်ဆိုင်တဲ့ Dom ကို ဆောက်
+      ageUp: function () {
+        this.age++;
+        document.getElementById("age").textContent = this.age;
+      },
+
+      //  add a new hobby  Method မှာရော တစ်ခါတည်း သူနဲ့ သက်ဆိုင်တဲ့ Dom ကို ဆောက်
+      addHobby: function (newHobby) {
+        this.hobbies.push(newHobby);
+        document.getElementById("hobbies").textContent = this.hobbies.join(", ");
+      }
+    };
+    const myFrutis = ['Kiwi','Blueberry','Papaya'];
+    // join က array ကို string အနေနဲ့ ပြောင်းပေးတယ်
+    // ရေနည်းက array.join() ကွင်းစကွင်းပိတ်ထဲမှာ ကိုယ်ထည့်ချင်တဲ့ ဟာကို ထည့်လို့ရတယ်  
+    console.log(myFrutis.join('; '));//ကွင်းစကွင်းပိတ်ထဲမှာ ; ရှိလို့ Kiwi; Blueberry; Papaya ဆိုပြီး ထွက်လာမယ်
+    console.log(myFrutis.join(', '));//ကွင်းစကွင်းပိတ်ထဲမှာ , ရှိလို့ Kiwi, Blueberry, Papaya ဆိုပြီး ထွက်လာမယ်
+  </script>
+
+</body>
+</html>

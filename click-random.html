@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .box {
+            width: 100px;
+            height: 100px;
+            background-color:#7a5c2f;
+            margin: 20px;
+        }
+
+    </style>
+</head>
+<body>
+    <button onclick="randomBox()">Apply Random Style</button>
+    <div class="box" id="myBox">Hello there</div>
+
+    <script>
+
+        function getRandomColor() {
+            
+            const letters = "0123456789ABCDEF";
+            let color     = "#";
+            for(let i = 0; i < 6; i++) {// 0,1,2,3,4,5
+                color += letters[Math.floor(Math.random()*16)];
+            } 
+            return color;
+        }
+
+        function randomBox(){
+
+           const box = document.getElementById('myBox');
+           box.style.position = "absolute";
+           box.style.top     = `${Math.random() * 700}px`;
+           box.style.left    = `${Math.random() * 700}px`;
+           box.style.transform = `rotate(${Math.random()*360}deg)`;
+           box.style.fontSize  = `${Math.random() * 20 + 10}px`;
+           box.style.backgroundColor = getRandomColor();
+
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gallery</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+   <style>
+    @import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap');
+    
+    /* =============================================================
+        1. CSS variables for Theme Management
+       ============================================================= */
+    :root {
+
+        /*Light Theme Colors */
+        --color-bg-light: rgb(243, 243, 243);
+        --color-text-light:#333;
+        --color-header-bg-light:white;
+         --color-overlay-bg-light:rgba(151, 11, 11, 0.6);
+        --color-button-hover-light:#111;
+        --color-button-hover-text-light:#fff;
+        --color-footer-bg-light:#fff;
+       
+
+        /* Font Sizes*/
+        --font-size-base:16px;
+        --font-size-large:2.5rem;
+        --font-size-medium:1.2rem;
+        --font-size-small:0.9rem;
+
+        /* transition duration*/
+        --transition-duration:0.3s;
+    }
+    
+    /* =============================================================
+        2. Reset and Base Styles
+       ============================================================= */
+
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        background-color: var(--color-bg-light);
+        color:var(--color-text-light);
+        line-height: 1.6;
+    }
+
+    /* =============================================================
+        3. Header Styles
+       ============================================================= */
+
+    header {
+        background-color: var(--color-header-bg-light);
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+        box-shadow:0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .header-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 1.5rem 2rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+    }
+
+    header h1 {
+        font-size: var(--font-size-large);
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        
+    }
+
+    .header-control {
+        margin-top: 1rem;
+        display: flex;
+        gap: 1rem;
+        align-items: center;
+    }
+
+    #searchBar {
+        border: 1px solid grey;
+        border-radius: 30px;
+        padding: 0.6rem 1.2rem;
+    }
+
+    #searchBar:focus {
+        outline: none;
+    }
+
+    #themeToggle {
+        border: none;
+        background: none;
+        font-size: 1.5rem;
+    }
+
+    /* =============================================================
+        4. Navigation Styles
+       ============================================================= */
+    
+    nav ul {
+        list-style: none;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
+        margin-top: 1rem;
+        justify-content: center;
+    }
+    nav .filter-btn {
+        border: none;
+        padding: 0.6rem 1.2rem;
+        border-radius: 30px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem ;
+        font-size: var(--font-size-medium);
+        transition:background-color 0.3s, color var(--transition-duration), transform var(--transition-duration) ;
+        transition: all var(--transition-duration);
+        
+    }
+
+    nav .filter-btn:hover {
+        background-color: var(--color-button-hover-light);
+        color: var(--color-button-hover-text-light);
+        transform: translateY(-3px);
+    }
+
+    /* =============================================================
+        5. Gallery Styles
+       ============================================================= */
+
+    .gallery {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 2rem;
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 2rem 1rem ;
+        
+    }
+
+    .gallery-item {
+        position: relative;
+        border-radius: 20px;
+        overflow: hidden;
+        box-shadow: 0 6px 18px rgba(252, 2, 2, 0.1);
+        transition: transfom var(--transition-duration);
+    }
+
+    .gallery-item img {
+        width: 100%;
+        height: 350px;
+        object-fit: cover;
+       
+    }
+
+    .gallery-item:hover img {
+        transform: scale(1.1);
+    }
+
+    .overlay {
+        position: absolute;
+        bottom: 0;
+        color: white;
+        padding: 1rem;
+        text-align: center;
+        background-color:var(--color-overlay-bg-light) ;
+        width: 100%;
+        transform: translateY(100%);
+        transition: transform var(--transition-duration), background-color 0.3s;
+    }
+
+    .overlay h3 {
+        font-size: var(--font-size-medium);
+        margin-bottom: 0.6rem;
+        font-weight: 700;
+    }
+
+    .overlay p {
+        line-height: 1.4;
+        font-size: var(--font-size-small);
+    }
+
+    .gallery-item:hover .overlay {
+        transform: translateY(0);
+    }
+
+    /* =============================================================
+        6. Navigation Styles
+       ============================================================= */
+    
+    footer {
+        background-color: var(--color-footer-bg-light);
+        text-align: center;
+        margin-top:3rem ;
+        padding: 2rem 1rem;
+        box-shadow: 0 -2px 10px rgba(254, 4, 4, 0.1);
+
+    }
+
+    footer a {
+        text-decoration: none;
+        color: inherit;
+        margin: 0 0.5rem;
+    }
+
+    body.dark-mode, header.dark-mode, footer.dark-mode {
+        background-color: rgb(176, 173, 173);
+    }
+
+    /* =============================================================
+        7. Resposive Design Adjustments
+       ============================================================= */
+
+    @media (max-width:768px) {
+        header h1 {
+            font-size: 2rem;
+        }
+
+        #searchBar {
+            width:200px;
+        }
+
+        nav ul li .filter-btn {
+            font-size:16px;
+        }
+
+ 
+    }
+
+    @media (max-width:480px) {
+        header h1 {
+            font-size: 1.8rem;
+        }
+
+        #searchBar {
+            width:150px;
+        }
+    }
+
+
+
+    </style>
+</head>
+<body>
+    <input type="text">
+    <button id="btn">Add</button>
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>Age</th>
+        </tr>
+        <tr>
+            <td>Anthony</td>
+            <td></td>
+        </tr>
+    </table>
+   <header>
+        <div class="header-container">
+            <h1><i class="fa-solid fa-code"></i>My Portfolio</h1>
+            <div class="header-control">
+                <input type="text" id="searchBar" placeholder="Search Projects...">
+                <button id="themeToggle" aria-label="Toggle Dark/Light Mode"><i class="fa-solid fa-moon"></i></button>
+            </div>
+            <nav>
+                <ul>
+                    <li><button class="filter-btn active" data-filter="all"><i class="fa-solid fa-table"></i>All</button></li>
+                    <li><button class="filter-btn" data-filter="web"><i class="fa-solid fa-laptop-code"></i>Web Design</button></li>
+                    <li><button class="filter-btn" data-filter="graphic"><i class="fa-solid fa-palette"></i>Graphic Design</button></li>
+                    <li><button class="filter-btn" data-filter="photography"><i class="fa-solid fa-camera"></i>Photography</button></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section class="gallery">
+            <!-- Web Project-->
+            <div class="gallery-item" data-category="web">
+                <img src="https://thursd.com/storage/media/53153/red-rose-on-a-dark-background.jpg" alt="Rose">
+                <div class="overlay">
+                    <h3>Web Project 1</h3>
+                    <p>A resoponsive website for a local business</p>
+                </div>
+            </div>
+            <!-- Graphic Project-->
+            <div class="gallery-item" data-category="graphic">
+                <img src="https://thursd.com/storage/media/53153/red-rose-on-a-dark-background.jpg" alt="Rose">
+                <div class="overlay">
+                    <h3>Graphic Project 1</h3>
+                    <p>A resoponsive website for a local business</p>
+                </div>
+            </div>
+
+            <!-- Photography Project-->
+            <div class="gallery-item" data-category="photography">
+                <img src="https://thursd.com/storage/media/53153/red-rose-on-a-dark-background.jpg" alt="Rose">
+                <div class="overlay">
+                    <h3>Graphic Project 1</h3>
+                    <p>A resoponsive website for a local business</p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+     <ul id="myList">
+        <li>Apple</li>
+        <li>Orange</li>
+        <li>Kiwi</li>
+        <li>lemon</li>
+        <li>Mango</li>
+     </ul>
+
+    <footer>
+        <p>© 2024 My Portfolio. Follow me on 
+            <a href="https://x.com/" target="_blank"><i class="fa-brands fa-square-x-twitter" ></i> X-twitter</a>
+            <a href="https://de.linkedin.com/"><i class="fa-brands fa-linkedin"></i>LinkedIn</a>    
+            <a href="https://www.facebook.com/marketplace/103720949666092/pianos/"> <i class="fa-brands fa-facebook"></i>Facebook</a>
+        </p>
+    </footer>
+
+    <script>
+        const number = '34';
+        console.log(typeof(number))
+        console.log(isNaN(number))
+        //const btn
+        //const input
+        // const table
+        // const tr create
+        // const namTd create
+        // const ageTd create
+        // const value = input.value.trim();
+
+        // if(!isNaN(value)) {
+            //ageId.textContent = input
+            //
+        //} else
+        // nameTd = 
+
+
+        const myFruits = [];
+        const lists = document.querySelectorAll('#myList li');
+
+        lists.forEach(list=>{
+            myFruits.push(list.textContent);
+        })
+        console.log(myFruits);
+
+
+
+        //myFruits.push('Straw');
+       // console.log(myFruits);
+       
+        const themeToggleBtn = document.getElementById('themeToggle');
+        const body = document.body;
+        const header = document.querySelector('header');
+        const footer = document.querySelector('footer');
+        const themeIcon = themeToggleBtn.querySelector('i');
+
+         //console.log(footer.classList.contains('hello'))
+        // true 
+       // console.log(body.classList.contains('dark-mode'));
+
+        function applyTheme(theme){
+            if(theme === "dark-mode"){
+                body.classList.add('dark-mode');
+                header.classList.add('dark-mode');
+
+                themeIcon.classList.remove('fa-moon');
+                themeIcon.classList.add('fa-sun');
+
+
+            } else {
+                body.classList.remove('dark-mode');
+                header.classList.remove('dark-mode');
+
+                themeIcon.classList.remove('fa-sun');
+                themeIcon.classList.add('fa-moon');
+            }
+        }
+
+        themeToggleBtn.addEventListener('click', ()=>{
+           if(body.classList.contains('dark-mode')){
+              applyTheme('light-mode');
+           } else {
+             applyTheme('dark-mode');
+           }
+
+        })
+
+
+
+
+       /* const btn = document.querySelectorAll('.filter-btn');
+        btn.forEach(btn=>{
+            btn.addEventListener('click',()=>{
+                console.log(btn.dataset.filter);
+            })
+        })
+
+        const myArray = [1,2,3,4,5,6];
+
+        myArray.forEach(num=>{
+            console.log(num);
+        })*/
+    
+    </script>
+
+</body>
+</html>
