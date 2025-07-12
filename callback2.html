@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Callback vs Promise vs Async</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f8fafc;
+      color: #333;
+      padding: 20px;
+    }
+    h2 {
+      color: #4f46e5;
+    }
+    .section {
+      border: 1px solid #ccc;
+      padding: 15px;
+      margin-bottom: 20px;
+      border-radius: 10px;
+      background-color: #fff;
+    }
+    button {
+      background: #4f46e5;
+      color: white;
+      padding: 10px;
+      border: none;
+      margin: 5px 0;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    pre {
+      background: #f0f0f0;
+      padding: 10px;
+      border-radius: 5px;
+      overflow-x: auto;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>💡 JS Async Learning Playground</h1>
+
+  <!-- 1. Non-blocking Example -->
+  <div class="section">
+    <h2>1️⃣ Non-Blocking Code</h2>
+    <button onclick="runNonBlockingCallback()">Callback</button>
+    <button onclick="runNonBlockingPromise()">Promise</button>
+    <button onclick="runNonBlockingAsync()">Async/Await</button>
+    <pre id="nonBlockingOutput"></pre>
+  </div>
+
+  <!-- 2. Asynchronous Handling -->
+  <div class="section">
+    <h2>2️⃣ Asynchronous Handling</h2>
+    <button onclick="simulateUserClick()">Simulate Click Event</button>
+    <pre id="clickOutput"></pre>
+  </div>
+
+  <!-- 3. Reusability -->
+  <div class="section">
+    <h2>3️⃣ Code Reusability</h2>
+    <button onclick="reusableWithCallbacks()">Callback</button>
+    <button onclick="reusableWithPromises()">Promise</button>
+    <button onclick="reusableWithAsync()">Async/Await</button>
+    <pre id="reusabilityOutput"></pre>
+  </div>
+
+  <!-- 4. Better Structure -->
+  <div class="section">
+    <h2>4️⃣ Better Structure</h2>
+    <button onclick="structuredCallback()">Callback</button>
+    <button onclick="structuredPromise()">Promise</button>
+    <button onclick="structuredAsync()">Async/Await</button>
+    <pre id="structureOutput"></pre>
+  </div>
+
+  <script>
+
+    // Blocking code example
+function slowTask() {
+  // simulate a heavy task
+  let start = Date.now();
+  console.log(start)
+  while (Date.now() - start < 3000) {
+    console.log(Date.now() - start);
+    // Wait for 3 seconds (blocking the thread)
+  }
+  console.log("Task done");
+}
+
+slowTask();  // Takes 3 seconds
+console.log("Next line");  // Waits 3 seconds before running
+
+    // Helper delay
+    function delay(ms) {
+      return new Promise(resolve => setTimeout(resolve, ms));
+    }
+
+    // 1. Non-blocking
+    function runNonBlockingCallback() {
+      const out = document.getElementById('nonBlockingOutput');
+      out.textContent = 'Callback: Start...\n';
+      setTimeout(() => {
+        out.textContent += 'Callback: Finished slow task\n';
+      }, 2000);
+      out.textContent += 'Callback: App still responsive...\n';
+    }
+
+    function runNonBlockingPromise() {
+      const out = document.getElementById('nonBlockingOutput');
+      out.textContent = 'Promise: Start...\n';
+      new Promise(resolve => setTimeout(() => {
+        out.textContent += 'Promise: Finished slow task\n';
+        resolve();
+      }, 2000));
+      out.textContent += 'Promise: App still responsive...\n';
+    }
+
+    async function runNonBlockingAsync() {
+      const out = document.getElementById('nonBlockingOutput');
+      out.textContent = 'Async: Start...\n';
+      await delay(2000);
+      out.textContent += 'Async: Finished slow task\n';
+      out.textContent += 'Async: App still responsive...\n';
+    }
+
+    // 2. Asynchronous Handling
+    function simulateUserClick() {
+      const out = document.getElementById('clickOutput');
+      out.textContent = '';
+      const btn = document.createElement('button');
+      btn.textContent = 'Click me!';
+      btn.onclick = () => {
+        out.textContent = 'You clicked the button!';
+        btn.remove();
+      };
+      out.appendChild(btn);
+    }
+
+    // 3. Reusability
+    function processText(data, callback) {
+      callback(data);
+    }
+
+    function reusableWithCallbacks() {
+      const out = document.getElementById('reusabilityOutput');
+      out.textContent = '';
+      processText("Hello", text => {
+        out.textContent += `Upper: ${text.toUpperCase()}\n`;
+      });
+      processText("Hello", text => {
+        out.textContent += `Length: ${text.length}\n`;
+      });
+    }
+
+    function toUpper(text) {
+      return new Promise(resolve => resolve(text.toUpperCase()));
+    }
+
+    function getLength(text) {
+      return new Promise(resolve => resolve(`Length: ${text.length}`));
+    }
+
+    function reusableWithPromises() {
+      const out = document.getElementById('reusabilityOutput');
+      out.textContent = '';
+      toUpper("Hi").then(res => {
+        out.textContent += `Upper: ${res}\n`;
+      });
+      getLength("Hi").then(res => {
+        out.textContent += `${res}\n`;
+      });
+    }
+
+    async function reusableWithAsync() {
+      const out = document.getElementById('reusabilityOutput');
+      out.textContent = '';
+      const upper = await toUpper("Hi");
+      const length = await getLength("Hi");
+      out.textContent += `Upper: ${upper}\n${length}\n`;
+    }
+
+    // 4. Better Structure
+    function getUser(callback) {
+      setTimeout(() => {
+        callback({ name: "Anthony", age: 10 });
+      }, 1000);
+    }
+
+    function greetUser(user) {
+      return `Hello, ${user.name}`;
+    }
+
+    function showAge(user) {
+      return `Age: ${user.age}`;
+    }
+
+    function structuredCallback() {
+      const out = document.getElementById('structureOutput');
+      out.textContent = 'Callback: Loading user...\n';
+      getUser(user => {
+        out.textContent += greetUser(user) + '\n';
+        out.textContent += showAge(user) + '\n';
+      });
+    }
+
+    function getUserPromise() {
+      return new Promise(resolve => {
+        setTimeout(() => {
+          resolve({ name: "Anthony", age: 10 });
+        }, 1000);
+      });
+    }
+
+    function structuredPromise() {
+      const out = document.getElementById('structureOutput');
+      out.textContent = 'Promise: Loading user...\n';
+      getUserPromise().then(user => {
+        out.textContent += greetUser(user) + '\n';
+        out.textContent += showAge(user) + '\n';
+      });
+    }
+
+    async function structuredAsync() {
+      const out = document.getElementById('structureOutput');
+      out.textContent = 'Async: Loading user...\n';
+      const user = await getUserPromise();
+      out.textContent += greetUser(user) + '\n';
+      out.textContent += showAge(user) + '\n';
+    }
+  </script>
+</body>
+</html>
