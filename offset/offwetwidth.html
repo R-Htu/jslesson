@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    #emoji {
+      font-size: 40px;
+      transition: transform 0.6s ease;
+    }
+  </style>
+</head>
+<body>
+  <div id="emoji">💥</div>
+
+  <script>
+    const emoji = document.getElementById('emoji');
+
+    emoji.addEventListener('click', () => {
+      emoji.style.transition = 'none';
+      emoji.style.transform = 'rotate(0deg)';
+
+      // 🔥 This forces browser to reflow styles immediately
+      emoji.offsetWidth;
+
+      emoji.style.transition = 'transform 0.6s ease';
+      emoji.style.transform = 'rotate(360deg)';
+    });
+  </script>
+</body>
+</html>

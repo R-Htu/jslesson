@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Gun Spin & Smoke Effect</title>
+  <style>
+    body {
+      background: #111;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      overflow: hidden;
+      color: white;
+    }
+
+    .container {
+      position: relative;
+    }
+
+    #gun {
+      font-size: 3rem;
+      cursor: pointer;
+      transition: transform 0.6s ease;
+      display: inline-block;
+    }
+
+    .smoke {
+      position: absolute;
+      font-size: 2rem;
+      opacity: 0;
+      animation: smokeMove 1s ease-out forwards;
+    }
+
+    @keyframes smokeMove {
+      0% {
+        transform: translate(0, 0);
+        opacity: 1;
+      }
+      100% {
+        transform: translate(var(--x), var(--y));
+        opacity: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <div id="gun">🔫</div>
+  </div>
+
+  <script>
+    const gun = document.getElementById('gun');
+    let angle = 0;
+
+    gun.addEventListener('click', () => {
+      angle += 720;
+      gun.style.transform = `rotate(${angle}deg)`;
+
+      for (let i = 0; i < 6; i++) {
+        const smoke = document.createElement('div');
+        smoke.className = 'smoke';
+        smoke.textContent = ' 💨💥';
+
+        const degree = i * 60;
+        const radian = degree * Math.PI / 180;
+
+        const x = Math.cos(radian) * 100;
+        const y = Math.sin(radian) * 100;
+
+        smoke.style.setProperty('--x', `${x}px`);
+        smoke.style.setProperty('--y', `${y}px`);
+        smoke.style.left = `25px`;
+        smoke.style.top = `-10px`;
+
+        gun.parentElement.appendChild(smoke);
+
+        setTimeout(() => smoke.remove(), 1000);
+      }
+    });
+  </script>
+
+  <!-- 
+  🧠 Step-by-step Calculation (Loop 0 to 5)
+  We loop 6 times, and each time we space the smoke at 60 degrees apart to make a circle:
+
+  i = 0 → 0°
+  i = 1 → 60°
+  i = 2 → 120°
+  i = 3 → 180°
+  i = 4 → 240°
+  i = 5 → 300°
+
+  🎯 Formula:
+  x = Math.cos(angleInRadians) * 100;
+  y = Math.sin(angleInRadians) * 100;
+
+  To convert degrees to radians:
+  radians = degrees × (π / 180)
+
+  🧮 Let's calculate each step
+
+  🌀 Loop i = 0 → 0 degrees
+  angle = 0 × 60 = 0°
+  radians = 0 × (π / 180) = 0
+  cos(0) = 1 → x = 1 × 100 = 100
+  sin(0) = 0 → y = 0 × 100 = 0
+  🟡 Smoke goes → RIGHT
+
+  🌀 Loop i = 1 → 60 degrees
+  angle = 1 × 60 = 60°
+  radians = 60 × (π / 180) ≈ 1.047
+  cos(1.047) ≈ 0.5 → x = 0.5 × 100 = 50
+  sin(1.047) ≈ 0.866 → y = 0.866 × 100 = 86.6
+  🟡 Smoke goes → UP-RIGHT
+
+  🌀 Loop i = 2 → 120 degrees
+  angle = 2 × 60 = 120°
+  radians = 120 × (π / 180) ≈ 2.094
+  cos(2.094) ≈ -0.5 → x = -50
+  sin(2.094) ≈ 0.866 → y = 86.6
+  🟡 Smoke goes → UP-LEFT
+
+  🌀 Loop i = 3 → 180 degrees
+  angle = 3 × 60 = 180°
+  radians = 180 × (π / 180) = π ≈ 3.141
+  cos(π) = -1 → x = -100
+  sin(π) = 0 → y = 0
+  🟡 Smoke goes → LEFT
+
+  🌀 Loop i = 4 → 240 degrees
+  angle = 4 × 60 = 240°
+  radians = 240 × (π / 180) ≈ 4.188
+  cos(4.188) ≈ -0.5 → x = -50
+  sin(4.188) ≈ -0.866 → y = -86.6
+  🟡 Smoke goes → DOWN-LEFT
+
+  🌀 Loop i = 5 → 300 degrees
+  angle = 5 × 60 = 300°
+  radians = 300 × (π / 180) ≈ 5.236
+  cos(5.236) ≈ 0.5 → x = 50
+  sin(5.236) ≈ -0.866 → y = -86.6
+  🟡 Smoke goes → DOWN-RIGHT
+
+  🌸 Visual Diagram
+
+          ↑
+     i=2     i=1
+  ← i=3   🔫   i=0 →
+     i=4     i=5
+          ↓
+
+  🌟 Summary Table:
+
+  | i | Degrees | Radians | cos   | sin    | x (px) | y (px) | Direction    |
+  |---|---------|---------|-------|--------|--------|--------|--------------|
+  | 0 | 0°      | 0       | 1     | 0      | 100    | 0      | Right        |
+  | 1 | 60°     | 1.047   | 0.5   | 0.866  | 50     | 86.6   | Up-Right     |
+  | 2 | 120°    | 2.094   | -0.5  | 0.866  | -50    | 86.6   | Up-Left      |
+  | 3 | 180°    | 3.141   | -1    | 0      | -100   | 0      | Left         |
+  | 4 | 240°    | 4.188   | -0.5  | -0.866 | -50    | -86.6  | Down-Left    |
+  | 5 | 300°    | 5.236   | 0.5   | -0.866 | 50     | -86.6  | Down-Right   |
+  -->
+</body>
+</html>

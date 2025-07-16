@@ -6,7 +6,43 @@
     <title>Document</title>
 </head>
 <body>
+    <div id="display">No Pain, No gain</div>
+  <!--   <button id="quoteDisplay">Show Quote</button>--> 
+
     <script>
+        const dispaly = document.getElementById('display');
+    
+        const quotes = ["I believe that nothing in life is unimportant; every moment can be a beginning",
+                        "Life is what happens when you're busy making other plans.",
+                         "Get busy living or get busy dying"
+        ]
+        // quotes[1]
+
+        function showQoute() {
+            const index = Math.floor(Math.random()*quotes.length);
+            // 0, 1,2
+            dispaly.style.opacity = 0;
+
+            setTimeout(()=>{
+                dispaly.textContent = quotes[index];
+                dispaly.style.opacity = 1;
+            }, 1000)
+
+        }
+        showQoute();
+
+        const quoteInterval = setInterval(showQoute,2000);
+        // 1000 = 1s
+        // 100000 = 10s
+        // 50000 = 50 s
+
+        setTimeout(()=>{
+            clearInterval(quoteInterval);
+        }, 10000)
+
+
+
+
         //let name = "Anthony"
         function sayHello(name) {
             console.log(`Hello ${name}`);
@@ -39,7 +75,7 @@
         }
 
         setTimeout(showMessage,3000);
-
+console.log('jkdfjdkfjd')
 
     </script>
 </body>

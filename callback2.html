@@ -82,7 +82,7 @@ function slowTask() {
   // simulate a heavy task
   let start = Date.now();
   console.log(start)
-  while (Date.now() - start < 3000) {
+  while (Date.now() - start < 1000) {
     console.log(Date.now() - start);
     // Wait for 3 seconds (blocking the thread)
   }
