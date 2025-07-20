@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8" />
+  <title>setProperty() Examples with Tailwind</title>
+  <!-- Tailwind CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    /* Custom styles for smoke animation and CSS variables */
+    .box {
+      --main-color: #3b82f6; /* Tailwind blue-500 */
+      background-color: var(--main-color);
+      transition: background-color 0.3s ease;
+    }
+    .ball {
+      --x: 0px;
+      --y: 0px;
+      transform: translate(var(--x), var(--y));
+      transition: transform 0.5s ease;
+    }
+    .gun-container {
+      position: relative;
+    }
+    .smoke {
+      position: absolute;
+      font-size: 1.5rem;
+      opacity: 0;
+      animation: smokeMove 1s ease-out forwards;
+    }
+    @keyframes smokeMove {
+      0% {
+        transform: translate(0, 0);
+        opacity: 1;
+      }
+      100% {
+        transform: translate(var(--x), var(--y));
+        opacity: 0;
+      }
+    }
+  </style>
+</head>
+<body class="bg-gray-100 min-h-screen p-8 flex flex-col gap-12 font-sans">
+
+  <!-- Example 1: Change Box Color -->
+  <section>
+    <h2 class="text-2xl mb-4">🎨 Example 1: Change Box Color</h2>
+    <div class="box text-white py-5 w-48 text-center rounded-lg mb-3">
+      Hello Box
+    </div>
+    <button
+      onclick="changeBoxColor()"
+      class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition"
+    >
+      Change Color
+    </button>
+  </section>
+
+  <!-- Example 2: Move Ball Randomly -->
+  <section>
+    <h2 class="text-2xl mb-4">⚽ Example 2: Move Ball</h2>
+    <button
+      onclick="moveBall()"
+      class="px-4 py-2 bg-orange-500 text-white rounded hover:bg-orange-600 transition"
+    >
+      Move the Ball
+    </button>
+    <div class="ball bg-orange-500 rounded-full w-12 h-12 mt-4"></div>
+  </section>
+
+  <!-- Example 3: Gun with Smoke Effect -->
+  <section>
+    <h2 class="text-2xl mb-4">🔫 Example 3: Gun Smoke</h2>
+    <div class="gun-container inline-block">
+      <div id="gun" class="text-5xl cursor-pointer select-none transition-transform duration-700">
+        🔫
+      </div>
+    </div>
+  </section>
+
+  <script>
+    // Example 1
+    function changeBoxColor() {
+      const box = document.querySelector('.box');
+      box.style.setProperty('--main-color', '#dc2626'); // Tailwind crimson-600
+    }
+
+    // Example 2
+    function moveBall() {
+      const ball = document.querySelector('.ball');
+      const randomX = Math.floor(Math.random() * 200) + 'px';
+      const randomY = Math.floor(Math.random() * 200) + 'px';
+
+      ball.style.setProperty('--x', randomX);
+      ball.style.setProperty('--y', randomY);
+    }
+
+    // Example 3
+    const gun = document.getElementById('gun');
+    let angle = 0;
+
+    gun.addEventListener('click', () => {
+      angle += 720;
+      gun.style.transform = `rotate(${angle}deg)`;
+
+      for (let i = 0; i < 6; i++) {
+        const smoke = document.createElement('div');
+        smoke.className = 'smoke';
+        smoke.textContent = '💨';
+
+        const degree = i * 60;
+        const radian = degree * Math.PI / 180;
+
+        const x = Math.cos(radian) * 100;
+        const y = Math.sin(radian) * 100;
+
+        smoke.style.setProperty('--x', `${x}px`);
+        smoke.style.setProperty('--y', `${y}px`);
+        smoke.style.left = `30px`;
+        smoke.style.top = `-10px`;
+
+        gun.parentElement.appendChild(smoke);
+
+        setTimeout(() => smoke.remove(), 1000);
+      }
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Gun Spin & Smoke Effect with Tailwind</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    /* Only custom CSS for animation and CSS variables */
+    @keyframes smokeMove {
+      0% {
+        transform: translate(0, 0);
+        opacity: 1;
+      }
+      100% {
+        transform: translate(var(--x), var(--y));
+        opacity: 0;
+      }
+    }
+    .smoke {
+      position: absolute;
+      font-size: 2rem;
+      opacity: 0;
+      animation: smokeMove 1s ease-out forwards;
+    }
+  </style>
+</head>
+<body class="bg-gray-900 text-white flex justify-center items-center h-screen overflow-hidden">
+
+  <div class="relative inline-block" id="container">
+    <div
+      id="gun"
+      class="text-5xl cursor-pointer select-none transition-transform duration-700"
+      >
+      🔫
+    </div>
+  </div>
+
+  <script>
+    const gun = document.getElementById('gun');
+    let angle = 0;
+
+    gun.addEventListener('click', () => {
+      angle += 720;
+      gun.style.transform = `rotate(${angle}deg)`;
+
+      for (let i = 0; i < 6; i++) {
+        const smoke = document.createElement('div');
+        smoke.className = 'smoke';
+        smoke.textContent = ' 💨💥';
+
+        const degree = i * 60;
+        const radian = degree * Math.PI / 180;
+
+        const x = Math.cos(radian) * 100;
+        const y = Math.sin(radian) * 100;
+
+        smoke.style.setProperty('--x', `${x}px`);
+        smoke.style.setProperty('--y', `${y}px`);
+
+        // Position relative to gun container
+        smoke.style.left = `25px`;
+        smoke.style.top = `-10px`;
+
+        gun.parentElement.appendChild(smoke);
+
+        setTimeout(() => smoke.remove(), 1000);
+      }
+    });
+  </script>
+</body>
+</html>

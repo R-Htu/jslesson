@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>setProperty() Examples</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      background: #f2f2f2;
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 3rem;
+    }
+
+    /* ===== Example 1: Change Box Color ===== */
+    .box {
+      --main-color: blue;
+      background-color: var(--main-color);
+      color: white;
+      padding: 20px;
+      width: 200px;
+      text-align: center;
+      border-radius: 10px;
+      transition: background-color 0.3s ease;
+    }
+
+    /* ===== Example 2: Move Ball ===== */
+    .ball {
+      --x: 0px;
+      --y: 0px;
+      width: 50px;
+      height: 50px;
+      background-color: orange;
+      border-radius: 50%;
+      transform: translate(var(--x), var(--y));
+      transition: transform 0.5s ease;
+      margin-top: 10px;
+    }
+
+    /* ===== Example 3: Gun Smoke from Click ===== */
+    .gun-container {
+      position: relative;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    #gun {
+      font-size: 3rem;
+      cursor: pointer;
+      transition: transform 0.6s ease;
+    }
+
+    .smoke {
+      position: absolute;
+      font-size: 1.5rem;
+      opacity: 0;
+      animation: smokeMove 1s ease-out forwards;
+    }
+
+    @keyframes smokeMove {
+      0% {
+        transform: translate(0, 0);
+        opacity: 1;
+      }
+      100% {
+        transform: translate(var(--x), var(--y));
+        opacity: 0;
+      }
+    }
+
+  </style>
+</head>
+<body>
+    <h1>🧠 What is setProperty()?</h1>
+    <p>setProperty() is a method used to set a CSS custom property (variable) directly on an element’s style.</p>
+
+    <h1>💡 Why use setProperty()? </h1>
+    <ul>
+        <li>To control CSS variables from JavaScript.</li>
+        <li>Useful for animations, themes, and dynamic styles.</li>
+        <li>Cleaner than changing many individual CSS rules directly.</li>
+
+    </ul>
+
+
+
+
+
+  <!-- ✅ Example 1: Change Box Color -->
+  <section>
+    <h2>🎨 Example 1: Change Box Color</h2>
+    <div class="box">Hello Box</div>
+    <h1></h1>
+    <button onclick="changeBoxColor()">Change Color</button>
+
+  </section>
+
+  <!-- ✅ Example 2: Move Ball Randomly -->
+  <section>
+    <h2>⚽ Example 2: Move Ball</h2>
+    <button onclick="moveBall()">Move the Ball</button>
+    <div class="ball"></div>
+  </section>
+
+  <!-- ✅ Example 3: Gun with Smoke Effect -->
+  <section>
+    <h2>🔫 Example 3: Gun Smoke</h2>
+    <div class="gun-container">
+      <div id="gun">🔫</div>
+    </div>
+  </section>
+
+  <script>
+    // 🎨 Example 1
+    function changeBoxColor() {
+      const box = document.querySelector('.box');
+      box.style.setProperty('--main-color', 'crimson');
+    }
+
+    // ⚽ Example 2
+    function moveBall() {
+      const ball = document.querySelector('.ball');
+      const randomX = Math.floor(Math.random() * 200) + 'px';
+      const randomY = Math.floor(Math.random() * 200) + 'px';
+
+      ball.style.setProperty('--x', randomX);
+      ball.style.setProperty('--y', randomY);
+    }
+
+    // 🔫 Example 3
+    const gun = document.getElementById('gun');
+    let angle = 0;
+
+    gun.addEventListener('click', () => {
+      angle += 720;
+      gun.style.transform = `rotate(${angle}deg)`;
+
+      for (let i = 0; i < 6; i++) {
+        const smoke = document.createElement('div');
+        smoke.className = 'smoke';
+        smoke.textContent = '💨';
+
+        const degree = i * 60;
+        const radian = degree * Math.PI / 180;
+
+        const x = Math.cos(radian) * 100;
+        const y = Math.sin(radian) * 100;
+
+        smoke.style.setProperty('--x', `${x}px`);
+        smoke.style.setProperty('--y', `${y}px`);
+        smoke.style.left = `30px`;
+        smoke.style.top = `-10px`;
+
+        gun.parentElement.appendChild(smoke);
+
+        setTimeout(() => smoke.remove(), 1000);
+      }
+    });
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <button onclick="startTimeout()">Start Time Out (3s)</button>
+    <button onclick="cancelTimeout()">Cancel Time Out</button>
+    <button onclick="startInterval()">Start Counter</button>
+    <button onclick="stopInterval()">Stop Counter</button>
+    <button onclick="clearAll()">Clear Everything</button>
+    
+
+    <p id="timeOutMessage"></p>
+
+    <div id="counter">0</div>
+
+    <script>
+        let timeoutId;
+       //setTimeout(function, time)
+        function startTimeout() {
+            const timeOutMessage = document.getElementById('timeOutMessage');
+            timeOutMessage.textContent = "Message will show in 3 s";
+
+            timeoutId = setTimeout(()=>{
+                timeOutMessage.textContent = 'Timeout completed!';
+            }, 3000)
+
+        }
+
+    </script>
+</body>
+</html>
